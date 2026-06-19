@@ -1,4 +1,5 @@
 import { Event, getEventById as findEventById } from "../models/eventModel.js";
+import { createAuditLog } from "../models/auditLogModel.js";
 
 // GET /api/events/:id
 // Controller never touches the database directly — it delegates to the
@@ -197,6 +198,15 @@ async function deleteEvent(req, res, next) {
     }
 
     await event.deleteOne();
+
+    // Record who deleted what, so an admin can audit it later via
+    // GET /api/admin/audit.
+    await createAuditLog({
+      actorId: req.user.id,
+      action: "EVENT_DELETED",
+      targetId: event._id,
+      details: event.title,
+    });
 
     res.status(200).json({ success: true, message: "Event deleted" });
   } catch (error) {

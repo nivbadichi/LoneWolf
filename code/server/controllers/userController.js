@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import { createAuditLog } from "../models/auditLogModel.js";
 
 const getUserProfile = async (req, res) => {
   try {
@@ -33,6 +34,15 @@ const suspendUser = async (req, res) => {
 
     user.isBanned = true;
     await user.save();
+
+    // Record who banned whom, so an admin can audit it later via
+    // GET /api/admin/audit.
+    await createAuditLog({
+      actorId: req.user.id,
+      action: "USER_BANNED",
+      targetId: user._id,
+      details: user.email,
+    });
 
     res.status(200).json({ message: "User suspended", id: user._id });
   } catch (error) {
