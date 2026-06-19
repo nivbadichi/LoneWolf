@@ -1,11 +1,26 @@
-const express = require('express');
+import express from "express";
+import {
+  getEventById,
+  getAllEvents,
+  getNearbyEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  exportToCalendar,
+} from "../controllers/eventController.js";
+import { validateEventId } from "../validators/eventValidator.js";
+import { protect } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-const { getEventById } = require('../controllers/eventController');
-const { validateEventId } = require('../validators/eventValidator');
+// Order matters: static paths (/, /nearby) must come before the dynamic
+// /:id route, otherwise Express would match "nearby" as an :id value.
+router.get("/", getAllEvents);
+router.get("/nearby", getNearbyEvents);
+router.get("/:id", validateEventId, getEventById);
+router.get("/:id/calendar", validateEventId, exportToCalendar);
+router.post("/", protect, createEvent);
+router.patch("/:id", protect, validateEventId, updateEvent);
+router.delete("/:id", protect, validateEventId, deleteEvent);
 
-// Order matters: validate the id shape before the controller ever runs.
-// (No requireAuth here — per func_implement.md, GET /api/events/:id is public.)
-router.get('/:id', validateEventId, getEventById);
-
-module.exports = router;
+export default router;
