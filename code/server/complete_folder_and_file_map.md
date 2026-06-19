@@ -30,7 +30,7 @@ This document outlines the complete backend architecture, directory structure, a
 │       reportController.js    ✅ Moderation and report handling
 │       feedbackController.js  ✅ Handling user feedback on attended events
 │       notificationController.js ✅ Managing and retrieving user notifications
-│       adminController.js     ⬜ [NEW] System audit logs and overarching admin actions
+│       adminController.js     ✅ [NEW] System audit logs and overarching admin actions
 │
 ├── /routes                    # API Endpoints mapped to controllers
 │       authRoutes.js          ✅
@@ -39,13 +39,13 @@ This document outlines the complete backend architecture, directory structure, a
 │       reportRoutes.js        ✅
 │       feedbackRoutes.js      ✅
 │       notificationRoutes.js  ✅
-│       adminRoutes.js         ⬜ [NEW]
+│       adminRoutes.js         ✅ [NEW]
 │
 ├── /middleware                # Middleware functions
 │       authMiddleware.js      ✅ JWT verification and Role checks (Admin vs User)
 │       errorHandler.js        ⬜ Centralized error handler
 │
 └── /validators                # Input validation files (Joi / Express-Validator)
-        authValidator.js       ⬜
+        authValidator.js       ✅
         eventValidator.js      ✅
 ```

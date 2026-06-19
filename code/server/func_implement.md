@@ -78,4 +78,4 @@
 
 | Status | Endpoint               | Function       | Description                                                                                                          |
 | :----- | :--------------------- | :------------- | :------------------------------------------------------------------------------------------------------------------- |
-| ⬜     | `GET /api/admin/audit` | `getAuditLogs` | Retrieves system activity logs for admins to monitor actions (event deletions, user bans). _(Protected: Admin only)_ |
+| ✅     | `GET /api/admin/audit` | `getAuditLogs` | Retrieves system activity logs for admins to monitor actions (event deletions, user bans). _(Protected: Admin only)_ |
