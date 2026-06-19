@@ -16,7 +16,8 @@ const Event = mongoose.model('Event', eventSchema);
 
 // Pure data-access: takes an id, returns the matching document (or null).
 // Knows nothing about HTTP — it could just as easily be called from a script.
-async function getEventById(eventId) {
+async function getEventById(eventId) 
+{
   return Event.findById(eventId);
 }
 
