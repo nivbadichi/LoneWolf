@@ -10,7 +10,7 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const app = express();
 
