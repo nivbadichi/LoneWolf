@@ -1,4 +1,4 @@
-const eventModel = require('../models/eventModel');
+import * as eventModel from '../models/eventModel.js';
 
 // GET /api/events/:id
 // Controller never touches the database directly — it delegates to the
@@ -19,4 +19,4 @@ async function getEventById(req, res, next) {
   }
 }
 
-module.exports = { getEventById };
+export { getEventById };

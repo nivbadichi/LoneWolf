@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 // Checks for a valid Bearer token on protected routes and attaches the
 // decoded payload to req.user so downstream controllers know who's calling.
@@ -16,4 +16,4 @@ function requireAuth(req, res, next) {
   }
 }
 
-module.exports = { requireAuth };
+export { requireAuth };

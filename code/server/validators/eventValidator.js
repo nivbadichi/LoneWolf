@@ -1,4 +1,4 @@
-const { param, validationResult } = require('express-validator');
+import { param, validationResult } from 'express-validator';
 
 // Rule: :id in the URL must be a valid Mongo ObjectId, otherwise
 // Event.findById() in the model would throw a CastError instead of a clean 404.
@@ -16,4 +16,4 @@ const validateEventId = [
   },
 ];
 
-module.exports = { validateEventId };
+export { validateEventId };

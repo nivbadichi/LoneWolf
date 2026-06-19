@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -20,4 +20,4 @@ async function getEventById(eventId) {
   return Event.findById(eventId);
 }
 
-module.exports = { Event, getEventById };
+export { Event, getEventById };
