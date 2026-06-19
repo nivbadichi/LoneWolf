@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api/auth", authRoutes);
 // endpoints are nested under an event id (e.g. POST /api/events/:id/feedback).
 app.use("/api/events", eventRoutes);
 app.use("/api/events", feedbackRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.use((err, req, res, next) => 
 {
