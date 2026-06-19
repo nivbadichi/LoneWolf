@@ -11,7 +11,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use('/api/events', eventRoutes);
 app.get("/", (req, res) => {
   res.send("LoneWolf API is running");
 });
