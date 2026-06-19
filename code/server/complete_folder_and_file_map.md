@@ -18,34 +18,34 @@ This document outlines the complete backend architecture, directory structure, a
 │
 ├── /models                    # Data schemas and models (Mongoose)
 │       userModel.js           ✅ User model (name, email, password, role, isBanned)
-│       eventModel.js          ⬜ Event model (title, date, capacity, geo-location, participants)
+│       eventModel.js          🚧 Event model (title, date, capacity, geo-location, participants) — written, not yet tested by us
 │       reportModel.js         ⬜ Report model (reported event/user, reason)
-│       feedbackModel.js       ⬜ Feedback model (user rating and reviews for events)
+│       feedbackModel.js       🚧 Feedback model (user rating and reviews for events) — written, not yet tested by us
 │       notificationModel.js   ⬜ Notification model (push alerts, reminders)
 │
 ├── /controllers               # Business logic and Database queries
 │       authController.js      ✅ Registration and Login (Guest -> Registered User)
-│       userController.js      ⬜ User management (Profile viewing, Admin suspending users)
-│       eventController.js     ⬜ Full CRUD, complex queries (Discover, Filter, Join/Leave)
+│       userController.js      ✅ User management (Profile viewing, Admin suspending users)
+│       eventController.js     🚧 Full CRUD, complex queries (Discover, Filter, Join/Leave) — written, not yet tested by us
 │       reportController.js    ⬜ Moderation and report handling
-│       feedbackController.js  ⬜ Handling user feedback on attended events
+│       feedbackController.js  🚧 Handling user feedback on attended events — written, not yet tested by us
 │       notificationController.js ⬜ Managing and retrieving user notifications
 │       adminController.js     ⬜ [NEW] System audit logs and overarching admin actions
 │
 ├── /routes                    # API Endpoints mapped to controllers
 │       authRoutes.js          ✅
-│       userRoutes.js          ⬜
-│       eventRoutes.js         ⬜
+│       userRoutes.js          ✅
+│       eventRoutes.js         🚧 written, not yet tested by us
 │       reportRoutes.js        ⬜
-│       feedbackRoutes.js      ⬜
+│       feedbackRoutes.js      🚧 written, not yet tested by us (fixed a requireAuth→protect import bug)
 │       notificationRoutes.js  ⬜
 │       adminRoutes.js         ⬜ [NEW]
 │
 ├── /middleware                # Middleware functions
-│       authMiddleware.js      🚧 JWT verification and Role checks (Admin vs User) — written, not yet wired to a live protected route
+│       authMiddleware.js      ✅ JWT verification and Role checks (Admin vs User)
 │       errorHandler.js        ⬜ Centralized error handler
 │
 └── /validators                # Input validation files (Joi / Express-Validator)
         authValidator.js       ⬜
-        eventValidator.js      ⬜
+        eventValidator.js      🚧 written, not yet tested by us
 ```

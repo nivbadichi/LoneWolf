@@ -17,9 +17,9 @@
 
 | Status | Endpoint                       | Function         | Description                                                                                           |
 | :----- | :----------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------- |
-| ⬜     | `GET /api/users/me`            | `getUserProfile` | Retrieves the profile of the authenticated user, including their participation records. _(Protected)_ |
-| ⬜     | `GET /api/users`               | `getAllUsers`    | Retrieves a list of all registered users. _(Protected: Admin only)_                                   |
-| ⬜     | `PATCH /api/users/:id/suspend` | `suspendUser`    | Allows an Admin to suspend or ban a user account for violating rules. _(Protected: Admin only)_       |
+| ✅     | `GET /api/users/me`            | `getUserProfile` | Retrieves the profile of the authenticated user, including their participation records. _(Protected)_ |
+| ✅     | `GET /api/users`               | `getAllUsers`    | Retrieves a list of all registered users. _(Protected: Admin only)_                                   |
+| ✅     | `PATCH /api/users/:id/suspend` | `suspendUser`    | Allows an Admin to suspend or ban a user account for violating rules. _(Protected: Admin only)_       |
 
 ### 3. Events Module
 
@@ -27,13 +27,13 @@
 
 | Status | Endpoint                       | Function           | Description                                                                                         |
 | :----- | :----------------------------- | :----------------- | :-------------------------------------------------------------------------------------------------- |
-| ⬜     | `GET /api/events`              | `getAllEvents`     | Retrieves events. Implements multi-filter logic (by category, start/end time) via query parameters. |
-| ⬜     | `GET /api/events/nearby`       | `getNearbyEvents`  | Discovers nearby events using a Haversine/geo-spatial proximity search (`lat`, `lng`, `radius`).    |
-| ⬜     | `GET /api/events/:id`          | `getEventById`     | Fetches the full details of a single event.                                                         |
-| ⬜     | `POST /api/events`             | `createEvent`      | Allows a User to publish a new event, becoming its host. _(Protected)_                              |
-| ⬜     | `PATCH /api/events/:id`        | `updateEvent`      | Allows the event's host to modify its details. _(Protected: host of this event only)_               |
-| ⬜     | `DELETE /api/events/:id`       | `deleteEvent`      | Allows the event's host to cancel it, or an Admin to remove it. _(Protected)_                       |
-| ⬜     | `GET /api/events/:id/calendar` | `exportToCalendar` | Generates an `.ics` event schedule entry to integrate with external Calendar Services.              |
+| 🚧     | `GET /api/events`              | `getAllEvents`     | Retrieves events. Implements multi-filter logic (by category, start/end time) via query parameters. |
+| 🚧     | `GET /api/events/nearby`       | `getNearbyEvents`  | Discovers nearby events using a Haversine/geo-spatial proximity search (`lat`, `lng`, `radius`).    |
+| 🚧     | `GET /api/events/:id`          | `getEventById`     | Fetches the full details of a single event.                                                         |
+| 🚧     | `POST /api/events`             | `createEvent`      | Allows a User to publish a new event, becoming its host. _(Protected)_                              |
+| 🚧     | `PATCH /api/events/:id`        | `updateEvent`      | Allows the event's host to modify its details. _(Protected: host of this event only)_               |
+| 🚧     | `DELETE /api/events/:id`       | `deleteEvent`      | Allows the event's host to cancel it, or an Admin to remove it. _(Protected)_                       |
+| 🚧     | `GET /api/events/:id/calendar` | `exportToCalendar` | Generates an `.ics` event schedule entry to integrate with external Calendar Services.              |
 
 ### 4. Event Attendance
 
@@ -50,8 +50,8 @@
 
 | Status | Endpoint                        | Function           | Description                                                                                  |
 | :----- | :------------------------------ | :----------------- | :------------------------------------------------------------------------------------------- |
-| ⬜     | `POST /api/events/:id/feedback` | `submitFeedback`   | Allows a Registered User to submit a rating/review for an event they attended. _(Protected)_ |
-| ⬜     | `GET /api/events/:id/feedback`  | `getEventFeedback` | Retrieves all feedback and ratings associated with a specific event.                         |
+| 🚧     | `POST /api/events/:id/feedback` | `submitFeedback`   | Allows a Registered User to submit a rating/review for an event they attended. _(Protected)_ |
+| 🚧     | `GET /api/events/:id/feedback`  | `getEventFeedback` | Retrieves all feedback and ratings associated with a specific event.                         |
 
 ### 6. Notifications Module
 
