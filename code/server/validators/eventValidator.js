@@ -28,6 +28,7 @@ const validateCreateEvent = [
     .withMessage("endTime must be after startTime"),
   body("location.lat").isFloat({ min: -90, max: 90 }).withMessage("location.lat must be between -90 and 90"),
   body("location.lng").isFloat({ min: -180, max: 180 }).withMessage("location.lng must be between -180 and 180"),
+  body("capacity").isInt({ min: 1 }).withMessage("capacity must be a positive integer"),
   handleValidation,
 ];
 
@@ -41,6 +42,7 @@ const validateUpdateEvent = [
   body("endTime").optional().isISO8601().withMessage("endTime must be a valid date"),
   body("location.lat").optional().isFloat({ min: -90, max: 90 }).withMessage("location.lat must be between -90 and 90"),
   body("location.lng").optional().isFloat({ min: -180, max: 180 }).withMessage("location.lng must be between -180 and 180"),
+  body("capacity").optional().isInt({ min: 1 }).withMessage("capacity must be a positive integer"),
   // Cross-field check only makes sense once both ends of the range are known.
   body("endTime").custom((endTime, { req }) => {
     if (endTime && req.body.startTime && new Date(endTime) <= new Date(req.body.startTime)) {

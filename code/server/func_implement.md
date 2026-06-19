@@ -41,8 +41,8 @@
 
 | Status | Endpoint                      | Function     | Description                                                                                       |
 | :----- | :---------------------------- | :----------- | :------------------------------------------------------------------------------------------------ |
-| ⬜     | `POST /api/events/:id/join`   | `joinEvent`  | Reserves a place in an event. Uses atomic transaction to check available capacity. _(Protected)_  |
-| ⬜     | `DELETE /api/events/:id/join` | `leaveEvent` | Aborts attendance, removes the user from the list, and releases the reserved place. _(Protected)_ |
+| ✅     | `POST /api/events/:id/join`   | `joinEvent`  | Reserves a place in an event. Uses atomic transaction to check available capacity. _(Protected)_  |
+| ✅     | `DELETE /api/events/:id/join` | `leaveEvent` | Aborts attendance, removes the user from the list, and releases the reserved place. _(Protected)_ |
 
 ### 5. Feedback Module
 

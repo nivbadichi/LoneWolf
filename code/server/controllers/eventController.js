@@ -131,7 +131,7 @@ async function getNearbyEvents(req, res, next) {
  */
 async function createEvent(req, res, next) {
   try {
-    const { title, category, startTime, endTime, location } = req.body;
+    const { title, category, startTime, endTime, location, capacity } = req.body;
 
     const event = await Event.create({
       title,
@@ -139,6 +139,7 @@ async function createEvent(req, res, next) {
       startTime,
       endTime,
       location,
+      capacity,
       hostId: req.user.id, // set from the verified JWT, never trust a hostId from the body
     });
 
@@ -164,12 +165,13 @@ async function updateEvent(req, res, next) {
       return res.status(403).json({ message: "Only the host can update this event" });
     }
 
-    const { title, category, startTime, endTime, location } = req.body;
+    const { title, category, startTime, endTime, location, capacity } = req.body;
     if (title !== undefined) event.title = title;
     if (category !== undefined) event.category = category;
     if (startTime !== undefined) event.startTime = startTime;
     if (endTime !== undefined) event.endTime = endTime;
     if (location !== undefined) event.location = location;
+    if (capacity !== undefined) event.capacity = capacity;
 
     await event.save();
 
@@ -214,6 +216,66 @@ async function deleteEvent(req, res, next) {
   }
 }
 
+/**
+ * POST /api/events/:id/join
+ * Reserves a place for the authenticated user. (Protected)
+ * Capacity + duplicate-join checks happen in a single atomic update so two
+ * simultaneous join requests can't both squeeze past a "still has room" check.
+ */
+async function joinEvent(req, res, next) {
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    if (event.participants.some((participantId) => participantId.toString() === req.user.id)) {
+      return res.status(400).json({ message: "You have already joined this event" });
+    }
+
+    const updatedEvent = await Event.findOneAndUpdate(
+      {
+        _id: event._id,
+        participants: { $ne: req.user.id },
+        $expr: { $lt: [{ $size: "$participants" }, "$capacity"] },
+      },
+      { $push: { participants: req.user.id } },
+      { new: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(400).json({ message: "Event is full" });
+    }
+
+    res.status(200).json({ success: true, data: updatedEvent });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * DELETE /api/events/:id/join
+ * Removes the authenticated user from the event's participant list. (Protected)
+ */
+async function leaveEvent(req, res, next) {
+  try {
+    const event = await Event.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { participants: req.user.id } },
+      { new: true }
+    );
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.status(200).json({ success: true, data: event });
+  } catch (error) {
+    next(error);
+  }
+}
+
 // Formats a Date as the UTC basic format iCalendar requires, e.g. 20260619T140000Z
 function toICSDate(date) {
   return new Date(date).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
@@ -253,4 +315,14 @@ async function exportToCalendar(req, res, next) {
   }
 }
 
-export { getEventById, getAllEvents, getNearbyEvents, createEvent, updateEvent, deleteEvent, exportToCalendar };
+export {
+  getEventById,
+  getAllEvents,
+  getNearbyEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  joinEvent,
+  leaveEvent,
+  exportToCalendar,
+};

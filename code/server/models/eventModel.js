@@ -10,6 +10,8 @@ const eventSchema = new mongoose.Schema({
     lat: { type: Number, required: true },
     lng: { type: Number, required: true },
   },
+  capacity: { type: Number, required: true, min: 1 },
+  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] }],
 });
 
 const Event = mongoose.model("Event", eventSchema);

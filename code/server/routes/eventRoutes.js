@@ -6,6 +6,8 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
+  joinEvent,
+  leaveEvent,
   exportToCalendar,
 } from "../controllers/eventController.js";
 import { validateEventId, validateCreateEvent, validateUpdateEvent } from "../validators/eventValidator.js";
@@ -22,5 +24,7 @@ router.get("/:id/calendar", validateEventId, exportToCalendar);
 router.post("/", protect, validateCreateEvent, createEvent);
 router.patch("/:id", protect, validateUpdateEvent, updateEvent);
 router.delete("/:id", protect, validateEventId, deleteEvent);
+router.post("/:id/join", protect, validateEventId, joinEvent);
+router.delete("/:id/join", protect, validateEventId, leaveEvent);
 
 export default router;
