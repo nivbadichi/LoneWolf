@@ -9,6 +9,7 @@ import feedbackRoutes from "./routes/feedbackRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -31,11 +32,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api", reportRoutes);
 app.use("/api/admin", adminRoutes);
 
-app.use((err, req, res, next) => 
-{
-  console.error(err);
-  res.status(500).json({ message: "Internal server error" });
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
