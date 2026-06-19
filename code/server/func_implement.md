@@ -59,8 +59,8 @@
 
 | Status | Endpoint                            | Function               | Description                                                                        |
 | :----- | :---------------------------------- | :--------------------- | :--------------------------------------------------------------------------------- |
-| ⬜     | `GET /api/notifications`            | `getUserNotifications` | Retrieves reminders, updates, and alerts for the authenticated user. _(Protected)_ |
-| ⬜     | `PATCH /api/notifications/:id/read` | `markAsRead`           | Marks a specific push notification/alert as read by the user. _(Protected)_        |
+| ✅     | `GET /api/notifications`            | `getUserNotifications` | Retrieves reminders, updates, and alerts for the authenticated user. _(Protected)_ |
+| ✅     | `PATCH /api/notifications/:id/read` | `markAsRead`           | Marks a specific push notification/alert as read by the user. _(Protected)_        |
 
 ### 7. Moderation & Reports Module
 
@@ -68,9 +68,9 @@
 
 | Status | Endpoint                         | Function          | Description                                                                                                  |
 | :----- | :------------------------------- | :---------------- | :----------------------------------------------------------------------------------------------------------- |
-| ⬜     | `POST /api/events/:id/report`    | `createReport`    | Allows a Registered User to flag an inappropriate event for moderation. _(Protected)_                        |
-| ⬜     | `GET /api/reports`               | `getAdminReports` | Allows an Admin to review all submitted moderation reports. _(Protected: Admin only)_                        |
-| ⬜     | `PATCH /api/reports/:id/resolve` | `resolveReport`   | Marks a report as resolved after an Admin takes action (e.g., removing the event). _(Protected: Admin only)_ |
+| ✅     | `POST /api/events/:id/report`    | `createReport`    | Allows a Registered User to flag an inappropriate event for moderation. _(Protected)_                        |
+| ✅     | `GET /api/reports`               | `getAdminReports` | Allows an Admin to review all submitted moderation reports. _(Protected: Admin only)_                        |
+| ✅     | `PATCH /api/reports/:id/resolve` | `resolveReport`   | Marks a report as resolved after an Admin takes action (e.g., removing the event). _(Protected: Admin only)_ |
 
 ### 8. System Audit & Logs
 
