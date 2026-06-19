@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import feedbackRoutes from "./routes/feedbackRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/events", feedbackRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api", reportRoutes);
 app.use("/api/admin", adminRoutes);
 
 app.use((err, req, res, next) => 
