@@ -8,7 +8,7 @@ import {
   deleteEvent,
   exportToCalendar,
 } from "../controllers/eventController.js";
-import { validateEventId } from "../validators/eventValidator.js";
+import { validateEventId, validateCreateEvent, validateUpdateEvent } from "../validators/eventValidator.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -19,8 +19,8 @@ router.get("/", getAllEvents);
 router.get("/nearby", getNearbyEvents);
 router.get("/:id", validateEventId, getEventById);
 router.get("/:id/calendar", validateEventId, exportToCalendar);
-router.post("/", protect, createEvent);
-router.patch("/:id", protect, validateEventId, updateEvent);
+router.post("/", protect, validateCreateEvent, createEvent);
+router.patch("/:id", protect, validateUpdateEvent, updateEvent);
 router.delete("/:id", protect, validateEventId, deleteEvent);
 
 export default router;
