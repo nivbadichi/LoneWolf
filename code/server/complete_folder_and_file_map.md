@@ -22,6 +22,7 @@ This document outlines the complete backend architecture, directory structure, a
 │       reportModel.js         ✅ Report model (reported event/user, reason)
 │       feedbackModel.js       ✅ Feedback model (user rating and reviews for events)
 │       notificationModel.js   ✅ Notification model (push alerts, reminders)
+│       auditLogModel.js       ✅ [NEW] Admin action log (bans, event deletions)
 │
 ├── /controllers               # Business logic and Database queries
 │       authController.js      ✅ Registration and Login (Guest -> Registered User)
@@ -43,9 +44,14 @@ This document outlines the complete backend architecture, directory structure, a
 │
 ├── /middleware                # Middleware functions
 │       authMiddleware.js      ✅ JWT verification and Role checks (Admin vs User)
-│       errorHandler.js        ⬜ Centralized error handler
+│       errorHandler.js        ✅ Centralized error handler
 │
 └── /validators                # Input validation files (Joi / Express-Validator)
         authValidator.js       ✅
         eventValidator.js      ✅
+        feedbackValidator.js   ✅ [NEW]
+        notificationValidator.js ✅ [NEW]
 ```
+
+## 📄 Other Artifacts
+- `LoneWolf.postman_collection.json` ✅ Importable Postman collection covering every route above (descriptions + saved example responses still pending — see grading checklist)
