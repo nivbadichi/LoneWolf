@@ -2,15 +2,34 @@
   "info": {
     "name": "LoneWolf API",
     "_postman_id": "lonewolf-api-collection",
+    "description": "Full API for the LoneWolf event platform. Each request has a description of what it does, and saved example responses (success + relevant error cases) so you can see the expected result without running the request yourself.\n\nWorkflow: Register -> Login (auto-saves {{token}} and {{userId}}) -> Create Event (auto-saves {{eventId}}) -> everything else.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:5000" },
-    { "key": "token", "value": "" },
-    { "key": "userId", "value": "" },
-    { "key": "eventId", "value": "" },
-    { "key": "reportId", "value": "" },
-    { "key": "notificationId", "value": "" }
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    },
+    {
+      "key": "reportId",
+      "value": ""
+    },
+    {
+      "key": "notificationId",
+      "value": ""
+    }
   ],
   "item": [
     {
@@ -20,17 +39,198 @@
           "name": "Register",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
-          }
+            "description": "Creates a new Registered User. Hashes the password with bcrypt before storing it. Fails with 400 if the email is already in use, or if name/email/password fail validation (e.g. password under 6 characters)."
+          },
+          "response": [
+            {
+              "name": "201 - Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Creates a new Registered User. Hashes the password with bcrypt before storing it. Fails with 400 if the email is already in use, or if name/email/password fail validation (e.g. password under 6 characters)."
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"role\": \"user\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 - Validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Creates a new Registered User. Hashes the password with bcrypt before storing it. Fails with 400 if the email is already in use, or if name/email/password fail validation (e.g. password under 6 characters)."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"field\",\n      \"msg\": \"Password must be at least 6 characters\",\n      \"path\": \"password\",\n      \"location\": \"body\"\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 - Email already in use",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "register"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Creates a new Registered User. Hashes the password with bcrypt before storing it. Fails with 400 if the email is already in use, or if name/email/password fail validation (e.g. password under 6 characters)."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Email already in use\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Authenticates a user and returns a signed JWT (valid 7 days). On success, this request's test script automatically saves the token into {{token}} and the user id into {{userId}} for use by every other protected request in this collection."
+          },
           "event": [
             {
               "listen": "test",
@@ -43,16 +243,94 @@
               }
             }
           ],
-          "request": {
-            "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
-              "options": { "raw": { "language": "json" } }
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Authenticates a user and returns a signed JWT (valid 7 days). On success, this request's test script automatically saves the token into {{token}} and the user id into {{userId}} for use by every other protected request in this collection."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"<jwt-returned-here>\",\n  \"user\": {\n    \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"name\": \"Alex Wilson\",\n    \"email\": \"alex@test.com\",\n    \"role\": \"user\"\n  }\n}",
+              "_postman_previewlanguage": "json"
             },
-            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
-          }
+            {
+              "name": "401 - Invalid credentials",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "auth",
+                    "login"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"alex@test.com\",\n  \"password\": \"mypassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Authenticates a user and returns a signed JWT (valid 7 days). On success, this request's test script automatically saves the token into {{token}} and the user id into {{userId}} for use by every other protected request in this collection."
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid credentials\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -63,29 +341,283 @@
           "name": "Get My Profile",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/users/me", "host": ["{{baseUrl}}"], "path": ["api", "users", "me"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            },
+            "description": "Returns the profile of whoever owns the Bearer token (password field excluded). Protected - requires a valid token."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/me",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "me"
+                  ]
+                },
+                "description": "Returns the profile of whoever owns the Bearer token (password field excluded). Protected - requires a valid token."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n  \"name\": \"Alex Wilson\",\n  \"email\": \"alex@test.com\",\n  \"role\": \"user\",\n  \"interests\": [],\n  \"isBanned\": false,\n  \"createdAt\": \"2026-06-20T10:00:00.000Z\",\n  \"updatedAt\": \"2026-06-20T10:00:00.000Z\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "401 - No token",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/me",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "me"
+                  ]
+                },
+                "description": "Returns the profile of whoever owns the Bearer token (password field excluded). Protected - requires a valid token."
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Not authorized, no token\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Get All Users (admin)",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api", "users"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "Lists every registered user (password excluded). Protected: the caller's JWT must have role 'admin', enforced by the adminOnly middleware."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "Lists every registered user (password excluded). Protected: the caller's JWT must have role 'admin', enforced by the adminOnly middleware."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"name\": \"Alex Wilson\",\n    \"email\": \"alex@test.com\",\n    \"role\": \"user\",\n    \"isBanned\": false\n  }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not an admin",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "Lists every registered user (password excluded). Protected: the caller's JWT must have role 'admin', enforced by the adminOnly middleware."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Admin access only\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Suspend User (admin)",
           "request": {
             "method": "PATCH",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/api/users/{{userId}}/suspend",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "users", "{{userId}}", "suspend"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{userId}}",
+                "suspend"
+              ]
+            },
+            "description": "Sets isBanned = true on the target user and writes a USER_BANNED entry to the audit log (visible via GET /api/admin/audit). Protected: admin only."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/{{userId}}/suspend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "{{userId}}",
+                    "suspend"
+                  ]
+                },
+                "description": "Sets isBanned = true on the target user and writes a USER_BANNED entry to the audit log (visible via GET /api/admin/audit). Protected: admin only."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"User suspended\",\n  \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 - User not found",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/{{userId}}/suspend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "{{userId}}",
+                    "suspend"
+                  ]
+                },
+                "description": "Sets isBanned = true on the target user and writes a USER_BANNED entry to the audit log (visible via GET /api/admin/audit). Protected: admin only."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"User not found\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         }
       ]
     },
@@ -96,34 +628,285 @@
           "name": "Get All Events",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{baseUrl}}/api/events", "host": ["{{baseUrl}}"], "path": ["api", "events"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "description": "Lists events. Public - no auth required. Supports optional query filters: ?category=, ?start=, ?end= (ISO dates), filtering on the startTime field."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                },
+                "description": "Lists events. Public - no auth required. Supports optional query filters: ?category=, ?start=, ?end= (ISO dates), filtering on the startTime field."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"count\": 1,\n  \"data\": [\n    {\n      \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n      \"title\": \"Board Game Night\",\n      \"category\": \"Gaming\",\n      \"hostId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n      \"startTime\": \"2026-07-01T18:00:00.000Z\",\n      \"endTime\": \"2026-07-01T21:00:00.000Z\",\n      \"location\": {\n        \"lat\": 32.0853,\n        \"lng\": 34.7818\n      },\n      \"capacity\": 6,\n      \"participants\": []\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Get Nearby Events",
           "request": {
             "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/events/nearby?lat=32.0853&lng=34.7818&radius=10",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "events", "nearby"],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "nearby"
+              ],
               "query": [
-                { "key": "lat", "value": "32.0853" },
-                { "key": "lng", "value": "34.7818" },
-                { "key": "radius", "value": "10" }
+                {
+                  "key": "lat",
+                  "value": "32.0853"
+                },
+                {
+                  "key": "lng",
+                  "value": "34.7818"
+                },
+                {
+                  "key": "radius",
+                  "value": "10"
+                }
               ]
+            },
+            "description": "Finds events within `radius` km of (lat, lng) using the Haversine formula, limited to events that haven't ended yet. Public. Defaults radius to 10km if omitted. Returns 400 if lat/lng are missing or not numbers."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/nearby?lat=32.0853&lng=34.7818&radius=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "nearby"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "32.0853"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "34.7818"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "Finds events within `radius` km of (lat, lng) using the Haversine formula, limited to events that haven't ended yet. Public. Defaults radius to 10km if omitted. Returns 400 if lat/lng are missing or not numbers."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"count\": 1,\n  \"data\": [\n    {\n      \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n      \"title\": \"Board Game Night\",\n      \"location\": {\n        \"lat\": 32.0853,\n        \"lng\": 34.7818\n      },\n      \"distance\": 0\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 - Missing coordinates",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/nearby?lat=32.0853&lng=34.7818&radius=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "nearby"
+                  ],
+                  "query": [
+                    {
+                      "key": "lat",
+                      "value": "32.0853"
+                    },
+                    {
+                      "key": "lng",
+                      "value": "34.7818"
+                    },
+                    {
+                      "key": "radius",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "description": "Finds events within `radius` km of (lat, lng) using the Haversine formula, limited to events that haven't ended yet. Public. Defaults radius to 10km if omitted. Returns 400 if lat/lng are missing or not numbers."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Please provide valid lat and lng query parameters.\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         },
         {
           "name": "Get Event By Id",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{baseUrl}}/api/events/{{eventId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventId}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}"
+              ]
+            },
+            "description": "Fetches a single event by id. Public. Returns 404 if the id doesn't exist, 400 if the id isn't a valid Mongo ObjectId."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "description": "Fetches a single event by id. Public. Returns 404 if the id doesn't exist, 400 if the id isn't a valid Mongo ObjectId."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n  \"title\": \"Board Game Night\",\n  \"category\": \"Gaming\",\n  \"hostId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n  \"startTime\": \"2026-07-01T18:00:00.000Z\",\n  \"endTime\": \"2026-07-01T21:00:00.000Z\",\n  \"location\": {\n    \"lat\": 32.0853,\n    \"lng\": 34.7818\n  },\n  \"capacity\": 6,\n  \"participants\": []\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 - Not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "description": "Fetches a single event by id. Public. Returns 404 if the id doesn't exist, 400 if the id isn't a valid Mongo ObjectId."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event not found\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Board Game Night\",\n  \"category\": \"Gaming\",\n  \"startTime\": \"2026-07-01T18:00:00.000Z\",\n  \"endTime\": \"2026-07-01T21:00:00.000Z\",\n  \"location\": { \"lat\": 32.0853, \"lng\": 34.7818 },\n  \"capacity\": 6\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Publishes a new event. Protected - hostId is taken from the verified JWT, never from the request body. On success, this request's test script saves the new event's id into {{eventId}}. Returns 400 on validation failure (bad dates, endTime before startTime, out-of-range coordinates)."
+          },
           "event": [
             {
               "listen": "test",
@@ -135,70 +918,603 @@
               }
             }
           ],
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"Board Game Night\",\n  \"category\": \"Gaming\",\n  \"startTime\": \"2026-07-01T18:00:00.000Z\",\n  \"endTime\": \"2026-07-01T21:00:00.000Z\",\n  \"location\": { \"lat\": 32.0853, \"lng\": 34.7818 },\n  \"capacity\": 6\n}",
-              "options": { "raw": { "language": "json" } }
+          "response": [
+            {
+              "name": "201 - Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Board Game Night\",\n  \"category\": \"Gaming\",\n  \"startTime\": \"2026-07-01T18:00:00.000Z\",\n  \"endTime\": \"2026-07-01T21:00:00.000Z\",\n  \"location\": { \"lat\": 32.0853, \"lng\": 34.7818 },\n  \"capacity\": 6\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Publishes a new event. Protected - hostId is taken from the verified JWT, never from the request body. On success, this request's test script saves the new event's id into {{eventId}}. Returns 400 on validation failure (bad dates, endTime before startTime, out-of-range coordinates)."
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n    \"title\": \"Board Game Night\",\n    \"category\": \"Gaming\",\n    \"hostId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"startTime\": \"2026-07-01T18:00:00.000Z\",\n    \"endTime\": \"2026-07-01T21:00:00.000Z\",\n    \"location\": {\n      \"lat\": 32.0853,\n      \"lng\": 34.7818\n    },\n    \"capacity\": 6,\n    \"participants\": []\n  }\n}",
+              "_postman_previewlanguage": "json"
             },
-            "url": { "raw": "{{baseUrl}}/api/events", "host": ["{{baseUrl}}"], "path": ["api", "events"] }
-          }
+            {
+              "name": "400 - Validation error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Board Game Night\",\n  \"category\": \"Gaming\",\n  \"startTime\": \"2026-07-01T18:00:00.000Z\",\n  \"endTime\": \"2026-07-01T21:00:00.000Z\",\n  \"location\": { \"lat\": 32.0853, \"lng\": 34.7818 },\n  \"capacity\": 6\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Publishes a new event. Protected - hostId is taken from the verified JWT, never from the request body. On success, this request's test script saves the new event's id into {{eventId}}. Returns 400 on validation failure (bad dates, endTime before startTime, out-of-range coordinates)."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"type\": \"field\",\n      \"msg\": \"endTime must be after startTime\",\n      \"path\": \"endTime\",\n      \"location\": \"body\"\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Update Event (host only)",
           "request": {
             "method": "PATCH",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
             ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}"
+              ]
+            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"capacity\": 8\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": { "raw": "{{baseUrl}}/api/events/{{eventId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventId}}"] }
-          }
+            "description": "Partially updates an event. Protected - only the event's own host (hostId matches the caller's id) may update it. Any field omitted from the body is left unchanged."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"capacity\": 8\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Partially updates an event. Protected - only the event's own host (hostId matches the caller's id) may update it. Any field omitted from the body is left unchanged."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n    \"title\": \"Board Game Night\",\n    \"capacity\": 8\n  }\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not the host",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"capacity\": 8\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Partially updates an event. Protected - only the event's own host (hostId matches the caller's id) may update it. Any field omitted from the body is left unchanged."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Only the host can update this event\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Delete Event (host/admin)",
           "request": {
             "method": "DELETE",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/events/{{eventId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventId}}"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}"
+              ]
+            },
+            "description": "Deletes an event. Protected - allowed for the event's host, or for any admin. Writes an EVENT_DELETED entry to the audit log on success."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "description": "Deletes an event. Protected - allowed for the event's host, or for any admin. Writes an EVENT_DELETED entry to the audit log on success."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Event deleted\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not authorized",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}"
+                  ]
+                },
+                "description": "Deletes an event. Protected - allowed for the event's host, or for any admin. Writes an EVENT_DELETED entry to the audit log on success."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Only the host or an admin can delete this event\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Join Event",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/events/{{eventId}}/join", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventId}}", "join"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "join"
+              ]
+            },
+            "description": "Reserves a spot for the caller in the event's participants list. Protected. Capacity and duplicate-join checks happen in one atomic findOneAndUpdate, so two simultaneous join requests can't both slip past a 'still has room' check. Returns 400 if already joined or if the event is full."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "join"
+                  ]
+                },
+                "description": "Reserves a spot for the caller in the event's participants list. Protected. Capacity and duplicate-join checks happen in one atomic findOneAndUpdate, so two simultaneous join requests can't both slip past a 'still has room' check. Returns 400 if already joined or if the event is full."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n    \"capacity\": 6,\n    \"participants\": [\n      \"665f1a2b3c4d5e6f7a8b9c0d\"\n    ]\n  }\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "400 - Event is full",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "join"
+                  ]
+                },
+                "description": "Reserves a spot for the caller in the event's participants list. Protected. Capacity and duplicate-join checks happen in one atomic findOneAndUpdate, so two simultaneous join requests can't both slip past a 'still has room' check. Returns 400 if already joined or if the event is full."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event is full\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Leave Event",
           "request": {
             "method": "DELETE",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/events/{{eventId}}/join", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventId}}", "join"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "join"
+              ]
+            },
+            "description": "Removes the caller from the event's participants list. Protected. Safe to call even if the user wasn't a participant - $pull is a no-op in that case."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "join"
+                  ]
+                },
+                "description": "Removes the caller from the event's participants list. Protected. Safe to call even if the user wasn't a participant - $pull is a no-op in that case."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n    \"capacity\": 6,\n    \"participants\": []\n  }\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 - Event not found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/join",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "join"
+                  ]
+                },
+                "description": "Removes the caller from the event's participants list. Protected. Safe to call even if the user wasn't a participant - $pull is a no-op in that case."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event not found\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Export Event to Calendar",
           "request": {
             "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/events/{{eventId}}/calendar",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "events", "{{eventId}}", "calendar"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "calendar"
+              ]
+            },
+            "description": "Generates a downloadable .ics file for the event (Content-Type: text/calendar) so it can be imported into Google/Apple/Outlook calendars. Public."
+          },
+          "response": [
+            {
+              "name": "200 - OK (.ics file)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/calendar",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "calendar"
+                  ]
+                },
+                "description": "Generates a downloadable .ics file for the event (Content-Type: text/calendar) so it can be imported into Google/Apple/Outlook calendars. Public."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/calendar"
+                }
+              ],
+              "body": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//LoneWolf//Events//EN\r\nBEGIN:VEVENT\r\nUID:665f2a2b3c4d5e6f7a8b9c0e@lonewolf\r\nDTSTAMP:20260620T180000Z\r\nDTSTART:20260701T180000Z\r\nDTEND:20260701T210000Z\r\nSUMMARY:Board Game Night\r\nEND:VEVENT\r\nEND:VCALENDAR",
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "name": "404 - Event not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/calendar",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "calendar"
+                  ]
+                },
+                "description": "Generates a downloadable .ics file for the event (Content-Type: text/calendar) so it can be imported into Google/Apple/Outlook calendars. Public."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event not found\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         }
       ]
     },
@@ -207,6 +1523,41 @@
       "item": [
         {
           "name": "Create Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}/report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "report"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"This event location seems fake\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Flags an event for moderation. Protected - any registered user can report an event they think is inappropriate. On success, saves the new report's id into {{reportId}}."
+          },
           "event": [
             {
               "listen": "test",
@@ -218,43 +1569,292 @@
               }
             }
           ],
-          "request": {
-            "method": "POST",
-            "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"reason\": \"This event location seems fake\"\n}",
-              "options": { "raw": { "language": "json" } }
+          "response": [
+            {
+              "name": "201 - Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/report",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "report"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"This event location seems fake\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Flags an event for moderation. Protected - any registered user can report an event they think is inappropriate. On success, saves the new report's id into {{reportId}}."
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"665f3a2b3c4d5e6f7a8b9c0f\",\n  \"reporterId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n  \"eventId\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n  \"reason\": \"This event location seems fake\",\n  \"status\": \"open\",\n  \"resolvedBy\": null\n}",
+              "_postman_previewlanguage": "json"
             },
-            "url": {
-              "raw": "{{baseUrl}}/api/events/{{eventId}}/report",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "events", "{{eventId}}", "report"]
+            {
+              "name": "404 - Event not found",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/report",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "report"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"This event location seems fake\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Flags an event for moderation. Protected - any registered user can report an event they think is inappropriate. On success, saves the new report's id into {{reportId}}."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event not found\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         },
         {
           "name": "Get Admin Reports (admin)",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/reports", "host": ["{{baseUrl}}"], "path": ["api", "reports"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reports",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports"
+              ]
+            },
+            "description": "Lists every moderation report, with the reporter's name/email and the reported event's title populated. Protected: admin only."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports"
+                  ]
+                },
+                "description": "Lists every moderation report, with the reporter's name/email and the reported event's title populated. Protected: admin only."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"665f3a2b3c4d5e6f7a8b9c0f\",\n    \"reporterId\": {\n      \"_id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n      \"name\": \"Alex Wilson\",\n      \"email\": \"alex@test.com\"\n    },\n    \"eventId\": {\n      \"_id\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n      \"title\": \"Board Game Night\"\n    },\n    \"reason\": \"This event location seems fake\",\n    \"status\": \"open\"\n  }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not an admin",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports"
+                  ]
+                },
+                "description": "Lists every moderation report, with the reporter's name/email and the reported event's title populated. Protected: admin only."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Admin access only\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Resolve Report (admin)",
           "request": {
             "method": "PATCH",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/api/reports/{{reportId}}/resolve",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "reports", "{{reportId}}", "resolve"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "{{reportId}}",
+                "resolve"
+              ]
+            },
+            "description": "Marks a report as resolved and records which admin resolved it. Protected: admin only."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/{{reportId}}/resolve",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "{{reportId}}",
+                    "resolve"
+                  ]
+                },
+                "description": "Marks a report as resolved and records which admin resolved it. Protected: admin only."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"665f3a2b3c4d5e6f7a8b9c0f\",\n  \"status\": \"resolved\",\n  \"resolvedBy\": \"665f1a2b3c4d5e6f7a8b9c0d\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 - Report not found",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/reports/{{reportId}}/resolve",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reports",
+                    "{{reportId}}",
+                    "resolve"
+                  ]
+                },
+                "description": "Marks a report as resolved and records which admin resolved it. Protected: admin only."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Report not found\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         }
       ]
     },
@@ -266,31 +1866,218 @@
           "request": {
             "method": "POST",
             "header": [
-              { "key": "Content-Type", "value": "application/json" },
-              { "key": "Authorization", "value": "Bearer {{token}}" }
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
             ],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "feedback"
+              ]
+            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Had a great time!\"\n}",
-              "options": { "raw": { "language": "json" } }
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": {
-              "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "events", "{{eventId}}", "feedback"]
+            "description": "Leaves a 1-5 rating and optional comment for an event. Protected. A unique index on (eventId, userId) means a user can only leave feedback once per event - a second attempt returns 409."
+          },
+          "response": [
+            {
+              "name": "201 - Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "feedback"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Had a great time!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Leaves a 1-5 rating and optional comment for an event. Protected. A unique index on (eventId, userId) means a user can only leave feedback once per event - a second attempt returns 409."
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_id\": \"665f4a2b3c4d5e6f7a8b9c10\",\n  \"eventId\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n  \"userId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n  \"rating\": 5,\n  \"comment\": \"Had a great time!\",\n  \"createdAt\": \"2026-06-20T18:00:00.000Z\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "409 - Already submitted",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "feedback"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Had a great time!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "description": "Leaves a 1-5 rating and optional comment for an event. Protected. A unique index on (eventId, userId) means a user can only leave feedback once per event - a second attempt returns 409."
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have already submitted feedback for this event\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         },
         {
           "name": "Get Event Feedback",
           "request": {
             "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "events", "{{eventId}}", "feedback"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "events",
+                "{{eventId}}",
+                "feedback"
+              ]
+            },
+            "description": "Lists all feedback for an event, newest first, with the author's name populated. Public."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "feedback"
+                  ]
+                },
+                "description": "Lists all feedback for an event, newest first, with the author's name populated. Public."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"_id\": \"665f4a2b3c4d5e6f7a8b9c10\",\n    \"rating\": 5,\n    \"comment\": \"Had a great time!\",\n    \"userId\": {\n      \"_id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n      \"name\": \"Alex Wilson\"\n    }\n  }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "404 - Event not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/events/{{eventId}}/feedback",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "events",
+                    "{{eventId}}",
+                    "feedback"
+                  ]
+                },
+                "description": "Lists all feedback for an event, newest first, with the author's name populated. Public."
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Event not found\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         }
       ]
     },
@@ -301,21 +2088,156 @@
           "name": "Get My Notifications",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/notifications", "host": ["{{baseUrl}}"], "path": ["api", "notifications"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications"
+              ]
+            },
+            "description": "Lists the caller's own notifications, newest first. Protected - userId is taken from the JWT, so a user only ever sees their own."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications"
+                  ]
+                },
+                "description": "Lists the caller's own notifications, newest first. Protected - userId is taken from the JWT, so a user only ever sees their own."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"count\": 1,\n  \"data\": [\n    {\n      \"_id\": \"665f5a2b3c4d5e6f7a8b9c11\",\n      \"userId\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n      \"message\": \"Your event starts in 1 hour\",\n      \"type\": \"reminder\",\n      \"read\": false\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "name": "Mark Notification Read",
           "request": {
             "method": "PATCH",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
             "url": {
               "raw": "{{baseUrl}}/api/notifications/{{notificationId}}/read",
-              "host": ["{{baseUrl}}"],
-              "path": ["api", "notifications", "{{notificationId}}", "read"]
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "{{notificationId}}",
+                "read"
+              ]
+            },
+            "description": "Sets read = true on one notification. Protected, with an ownership check - returns 403 if the notification belongs to a different user than the caller."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/{{notificationId}}/read",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "{{notificationId}}",
+                    "read"
+                  ]
+                },
+                "description": "Sets read = true on one notification. Protected, with an ownership check - returns 403 if the notification belongs to a different user than the caller."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"_id\": \"665f5a2b3c4d5e6f7a8b9c11\",\n    \"read\": true\n  }\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not your notification",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications/{{notificationId}}/read",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "notifications",
+                    "{{notificationId}}",
+                    "read"
+                  ]
+                },
+                "description": "Sets read = true on one notification. Protected, with an ownership check - returns 403 if the notification belongs to a different user than the caller."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You can only mark your own notifications as read\"\n}",
+              "_postman_previewlanguage": "json"
             }
-          }
+          ]
         }
       ]
     },
@@ -326,9 +2248,95 @@
           "name": "Get Audit Logs (admin)",
           "request": {
             "method": "GET",
-            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-            "url": { "raw": "{{baseUrl}}/api/admin/audit", "host": ["{{baseUrl}}"], "path": ["api", "admin", "audit"] }
-          }
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/audit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "audit"
+              ]
+            },
+            "description": "Returns the full activity log (event deletions, user bans, etc.) with the acting admin's name/email populated. Protected: admin only."
+          },
+          "response": [
+            {
+              "name": "200 - OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/audit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "audit"
+                  ]
+                },
+                "description": "Returns the full activity log (event deletions, user bans, etc.) with the acting admin's name/email populated. Protected: admin only."
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"count\": 1,\n  \"data\": [\n    {\n      \"_id\": \"665f6a2b3c4d5e6f7a8b9c12\",\n      \"actorId\": {\n        \"_id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n        \"name\": \"Alex Wilson\",\n        \"email\": \"alex@test.com\"\n      },\n      \"action\": \"EVENT_DELETED\",\n      \"targetId\": \"665f2a2b3c4d5e6f7a8b9c0e\",\n      \"details\": \"Board Game Night\"\n    }\n  ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "403 - Not an admin",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/audit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "admin",
+                    "audit"
+                  ]
+                },
+                "description": "Returns the full activity log (event deletions, user bans, etc.) with the acting admin's name/email populated. Protected: admin only."
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Admin access only\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }
