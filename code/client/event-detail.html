@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LoneWolf</title>
+  <title>LoneWolf - Event Details</title>
 
   <link rel="stylesheet" href="style/reset.css" />
   <link rel="stylesheet" href="style/main.css" />
@@ -14,14 +14,14 @@
   <link rel="stylesheet" href="style/pages.css" />
 </head>
 <body>
-  <!-- Home page - UI markup to be implemented. Same <header>/<div id="modal-root">
-       shell is repeated at the top of every other .html page in this folder. -->
+  <!-- Single event detail page - UI markup to be implemented.
+       Expects an ?id=<eventId> query param identifying which event to load. -->
   <header id="navbar"></header>
 
   <main id="app"></main>
 
   <div id="modal-root"></div>
 
-  <script type="module" src="js/pages/homePage.js"></script>
+  <script type="module" src="js/pages/eventDetailPage.js"></script>
 </body>
 </html>
