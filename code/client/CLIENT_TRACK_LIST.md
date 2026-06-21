@@ -8,7 +8,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 ## Pages (`.html`)
 | File | Status |
 | :--- | :--- |
-| `index.html` | ⬜ |
+| `index.html` | ✅ (Bootstrap-based landing page, scoped to this page only) |
 | `login.html` | ✅ |
 | `register.html` | ✅ |
 | `events.html` | ✅ (Pass 1: list view only — filters/nearby/map are Pass 2) |
@@ -33,7 +33,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 ## `js/pages/` — one script per page
 | File | Status |
 | :--- | :--- |
-| `homePage.js` | ⬜ |
+| `homePage.js` | N/A — not needed yet; navbar.js already handles this page's auth-visibility toggling (no other page-specific behavior exists yet) |
 | `loginPage.js` | ✅ |
 | `registerPage.js` | ✅ |
 | `eventsPage.js` | ✅ (Pass 1: list view only) |
