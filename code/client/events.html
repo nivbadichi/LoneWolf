@@ -32,7 +32,16 @@
   <main id="app">
     <section class="page-section">
       <h1>Discover Events</h1>
-      <div id="events-list" class="event-list"></div>
+
+      <div class="events-view-toggle">
+        <button id="view-map-btn" type="button" class="events-view-toggle__btn events-view-toggle__btn--active">
+          Map View
+        </button>
+        <button id="view-list-btn" type="button" class="events-view-toggle__btn">List View</button>
+      </div>
+
+      <div id="events-map" class="events-map"></div>
+      <div id="events-list" class="event-list is-hidden"></div>
     </section>
   </main>
 

@@ -11,7 +11,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `index.html` | ✅ (Bootstrap-based landing page, scoped to this page only) |
 | `login.html` | ✅ |
 | `register.html` | ✅ |
-| `events.html` | ✅ (Pass 1: list view only — filters/nearby/map are Pass 2) |
+| `events.html` | ✅ (Pass 2: Google Maps view added as default, toggle vs. list) |
 | `event-detail.html` | ⬜ |
 | `profile.html` | ✅ |
 | `notifications.html` | ⬜ |
@@ -36,7 +36,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `homePage.js` | N/A — not needed yet; navbar.js already handles this page's auth-visibility toggling (no other page-specific behavior exists yet) |
 | `loginPage.js` | ✅ |
 | `registerPage.js` | ✅ |
-| `eventsPage.js` | ✅ (Pass 1: list view only) |
+| `eventsPage.js` | ✅ (Pass 2: map/list toggle wiring) |
 | `eventDetailPage.js` | ⬜ |
 | `profilePage.js` | ✅ |
 | `notificationsPage.js` | ⬜ |
@@ -49,6 +49,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `modal.js` | ⬜ |
 | `navbar.js` | ✅ |
 | `eventCard.js` | ✅ |
+| `eventsMap.js` | ✅ [NEW — not in original architecture doc] Google Maps integration: dynamic script loading, geolocation, bounds-fitting, markers + InfoWindow popups |
 | `notificationBell.js` | ⬜ |
 
 ## `js/utils/`
