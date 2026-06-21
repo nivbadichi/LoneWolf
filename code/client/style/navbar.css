@@ -5,7 +5,6 @@
   background-color: var(--color-primary);
   padding: 1rem 1.5rem;
 }
-
 .navbar__brand {
   color: var(--color-accent);
   font-weight: 700;
