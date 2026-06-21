@@ -12,10 +12,10 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `login.html` | ✅ |
 | `register.html` | ✅ |
 | `events.html` | ✅ (Pass 2: Google Maps view added as default, toggle vs. list) |
-| `event-detail.html` | ⬜ |
+| `event-detail.html` | ✅ |
 | `profile.html` | ✅ |
-| `notifications.html` | ⬜ |
-| `admin.html` | ⬜ |
+| `notifications.html` | ✅ |
+| `admin.html` | ✅ |
 
 ## `js/api/` — server communication layer
 | File | Status |
@@ -23,41 +23,41 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `config.js` | ✅ |
 | `http.js` | ✅ |
 | `authApi.js` | ✅ |
-| `usersApi.js` | ✅ (getMyProfile only — list/suspend pending, those are admin.html's job) |
-| `eventsApi.js` | ✅ (getAllEvents only so far — nearby/join/leave/calendar pending) |
-| `feedbackApi.js` | ⬜ |
-| `reportsApi.js` | ⬜ |
-| `notificationsApi.js` | ⬜ |
-| `adminApi.js` | ⬜ |
+| `usersApi.js` | ✅ (getMyProfile, updateMyProfile, getAllUsers, suspendUser) |
+| `eventsApi.js` | ✅ (getAllEvents, getEventById, joinEvent, leaveEvent, deleteEvent, getCalendarUrl) |
+| `feedbackApi.js` | ✅ |
+| `reportsApi.js` | ✅ |
+| `notificationsApi.js` | ✅ |
+| `adminApi.js` | ✅ |
 
 ## `js/pages/` — one script per page
 | File | Status |
 | :--- | :--- |
-| `homePage.js` | N/A — not needed yet; navbar.js already handles this page's auth-visibility toggling (no other page-specific behavior exists yet) |
+| `homePage.js` | Removed — unused; index.html has no page-specific behavior beyond what navbar.js already provides |
 | `loginPage.js` | ✅ |
 | `registerPage.js` | ✅ |
 | `eventsPage.js` | ✅ (Pass 2: map/list toggle wiring) |
-| `eventDetailPage.js` | ⬜ |
+| `eventDetailPage.js` | ✅ |
 | `profilePage.js` | ✅ |
-| `notificationsPage.js` | ⬜ |
-| `adminPage.js` | ⬜ |
+| `notificationsPage.js` | ✅ |
+| `adminPage.js` | ✅ |
 
 ## `js/components/`
 | File | Status |
 | :--- | :--- |
 | `toast.js` | ✅ |
-| `modal.js` | ⬜ |
+| `modal.js` | ✅ |
 | `navbar.js` | ✅ |
 | `eventCard.js` | ✅ |
 | `eventsMap.js` | ✅ [NEW — not in original architecture doc] Google Maps integration: dynamic script loading, geolocation, bounds-fitting, markers + InfoWindow popups |
-| `notificationBell.js` | ⬜ |
+| `notificationBell.js` | ✅ (repurposed as a single-notification-row renderer, same role as eventCard.js, rather than a navbar bell widget) |
 
 ## `js/utils/`
 | File | Status |
 | :--- | :--- |
 | `auth.js` | ✅ |
 | `dom.js` | ✅ |
-| `validators.js` | ⬜ |
+| `validators.js` | ✅ |
 
 ## `style/`
 | File | Status |
@@ -66,6 +66,6 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `main.css` | ✅ |
 | `pages.css` | ✅ |
 | `navbar.css` | ✅ |
-| `modal.css` | ⬜ |
-| `toast.css` | ⬜ |
+| `modal.css` | ✅ |
+| `toast.css` | ✅ |
 | `event-card.css` | ✅ |
