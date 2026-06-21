@@ -59,6 +59,10 @@ input:focus {
   outline-offset: 1px;
 }
 
+.is-hidden {
+  display: none;
+}
+
 
 .bg-brand {
   background-color: var(--color-primary);
