@@ -1,1 +1,41 @@
-/* Navbar component styles - to be implemented. */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-primary);
+  padding: 1rem 1.5rem;
+}
+
+.navbar__brand {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.navbar__links a,
+.navbar__links button {
+  color: white;
+  font-size: 0.95rem;
+}
+
+.navbar__links button {
+  background: none;
+  padding: 0;
+  font-weight: 400;
+}
+
+.navbar__link--active {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.navbar__hidden {
+  display: none;
+}

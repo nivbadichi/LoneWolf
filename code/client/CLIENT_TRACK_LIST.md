@@ -47,7 +47,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | :--- | :--- |
 | `toast.js` | ✅ |
 | `modal.js` | ⬜ |
-| `navbar.js` | ⬜ |
+| `navbar.js` | ✅ |
 | `eventCard.js` | ⬜ |
 | `notificationBell.js` | ⬜ |
 
@@ -64,7 +64,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `reset.css` | ✅ |
 | `main.css` | ✅ |
 | `pages.css` | ✅ |
-| `navbar.css` | ⬜ |
+| `navbar.css` | ✅ |
 | `modal.css` | ⬜ |
 | `toast.css` | ⬜ |
 | `event-card.css` | ⬜ |
