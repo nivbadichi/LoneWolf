@@ -10,7 +10,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | :--- | :--- |
 | `index.html` | ⬜ |
 | `login.html` | ✅ |
-| `register.html` | ⬜ |
+| `register.html` | ✅ |
 | `events.html` | ⬜ |
 | `event-detail.html` | ⬜ |
 | `profile.html` | ⬜ |
@@ -35,7 +35,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | :--- | :--- |
 | `homePage.js` | ⬜ |
 | `loginPage.js` | ✅ |
-| `registerPage.js` | ⬜ |
+| `registerPage.js` | ✅ |
 | `eventsPage.js` | ⬜ |
 | `eventDetailPage.js` | ⬜ |
 | `profilePage.js` | ⬜ |
