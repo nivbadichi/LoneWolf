@@ -11,7 +11,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `index.html` | ⬜ |
 | `login.html` | ✅ |
 | `register.html` | ✅ |
-| `events.html` | ⬜ |
+| `events.html` | ✅ (Pass 1: list view only — filters/nearby/map are Pass 2) |
 | `event-detail.html` | ⬜ |
 | `profile.html` | ⬜ |
 | `notifications.html` | ⬜ |
@@ -24,7 +24,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `http.js` | ✅ |
 | `authApi.js` | ✅ |
 | `usersApi.js` | ⬜ |
-| `eventsApi.js` | ⬜ |
+| `eventsApi.js` | ✅ (getAllEvents only so far — nearby/join/leave/calendar pending) |
 | `feedbackApi.js` | ⬜ |
 | `reportsApi.js` | ⬜ |
 | `notificationsApi.js` | ⬜ |
@@ -36,7 +36,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `homePage.js` | ⬜ |
 | `loginPage.js` | ✅ |
 | `registerPage.js` | ✅ |
-| `eventsPage.js` | ⬜ |
+| `eventsPage.js` | ✅ (Pass 1: list view only) |
 | `eventDetailPage.js` | ⬜ |
 | `profilePage.js` | ⬜ |
 | `notificationsPage.js` | ⬜ |
@@ -48,7 +48,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `toast.js` | ✅ |
 | `modal.js` | ⬜ |
 | `navbar.js` | ✅ |
-| `eventCard.js` | ⬜ |
+| `eventCard.js` | ✅ |
 | `notificationBell.js` | ⬜ |
 
 ## `js/utils/`
@@ -67,4 +67,4 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `navbar.css` | ✅ |
 | `modal.css` | ⬜ |
 | `toast.css` | ⬜ |
-| `event-card.css` | ⬜ |
+| `event-card.css` | ✅ |
