@@ -46,3 +46,25 @@
 .auth-switch a:hover {
   color: var(--color-accent-hover);
 }
+
+.page-section {
+  width: 100%;
+  max-width: 960px;
+}
+
+.page-section h1 {
+  margin-bottom: 1.5rem;
+  color: var(--color-primary);
+}
+
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.page-state {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 2rem 0;
+}

@@ -1,1 +1,30 @@
-/* Event card component styles - to be implemented. */
+.event-card {
+  display: block;
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.15s ease;
+}
+
+.event-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.event-card__title {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+
+.event-card__meta {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.event-card__capacity {
+  color: var(--color-accent-hover);
+  font-size: 0.85rem;
+  font-weight: 600;
+}

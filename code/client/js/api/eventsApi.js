@@ -1,1 +1,5 @@
-// Events API calls (CRUD, nearby, join/leave, calendar) - to be implemented.
+import { request } from "./http.js";
+
+export function getAllEvents() {
+  return request("/api/events");
+}
