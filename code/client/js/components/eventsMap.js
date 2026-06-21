@@ -44,7 +44,8 @@ function buildInfoWindowContent(event) {
   meta.textContent = event.category;
 
   const link = document.createElement("a");
-  link.href = `event-detail.html?id=${event._id}`;
+  // No ".html" here - see the matching comment in eventCard.js for why.
+  link.href = `event-detail?id=${event._id}`;
   link.textContent = "View details";
 
   container.appendChild(title);

@@ -12,7 +12,11 @@ function formatDateRange(startTime, endTime) {
 export function createEventCard(event) {
   const card = document.createElement("a");
   card.className = "event-card";
-  card.href = `event-detail.html?id=${event._id}`;
+  // No ".html" here on purpose: "serve" (our dev server) auto-redirects
+  // *.html?query to the extensionless URL, and that redirect drops the
+  // query string. Linking directly to the already-"clean" URL means no
+  // redirect ever happens, so ?id=... never gets lost.
+  card.href = `event-detail?id=${event._id}`;
 
   const title = document.createElement("h3");
   title.className = "event-card__title";
