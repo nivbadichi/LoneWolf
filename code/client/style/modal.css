@@ -1,1 +1,59 @@
-/* Modal component styles - to be implemented. */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.modal__body {
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.modal__action--secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.modal__action--secondary:hover {
+  background-color: var(--color-bg);
+}
+
+.modal__action--primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.modal__action--primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.modal__action--danger {
+  background-color: var(--color-error);
+  color: white;
+}
