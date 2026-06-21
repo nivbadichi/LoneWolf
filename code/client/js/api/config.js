@@ -1,1 +1,1 @@
-// API base URL config - to be implemented.
+export const API_BASE_URL = "http://localhost:5000";
