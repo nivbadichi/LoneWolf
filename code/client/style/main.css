@@ -93,6 +93,15 @@ input:focus {
   background-color: var(--color-bg);
 }
 
+.btn-danger {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #a83225;
+}
+
 .hero-subtitle {
   max-width: 480px;
 }

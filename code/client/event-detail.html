@@ -14,14 +14,66 @@
   <link rel="stylesheet" href="style/pages.css" />
 </head>
 <body>
-  <!-- Single event detail page - UI markup to be implemented.
-       Expects an ?id=<eventId> query param identifying which event to load. -->
-  <header id="navbar"></header>
+  <header id="navbar">
+    <nav class="navbar">
+      <a href="index.html" class="navbar__brand">LoneWolf</a>
+      <div class="navbar__links">
+        <a href="events.html" class="auth-only">Events</a>
+        <a href="profile.html" class="auth-only">Profile</a>
+        <a href="notifications.html" class="auth-only">Notifications</a>
+        <a href="admin.html" class="admin-only">Admin</a>
+        <a href="login.html" class="guest-only">Log In</a>
+        <a href="register.html" class="guest-only">Register</a>
+        <button id="logout-btn" class="auth-only">Log Out</button>
+      </div>
+    </nav>
+  </header>
 
-  <main id="app"></main>
+  <main id="app">
+    <section class="event-detail-page">
+      <p id="event-loading">Loading event...</p>
+
+      <div id="event-content" class="event-detail__content is-hidden">
+        <header class="event-detail__header">
+          <span id="event-category" class="event-card__category"></span>
+          <h1 id="event-title"></h1>
+          <p id="event-meta" class="event-detail__meta"></p>
+          <p id="event-capacity" class="event-detail__meta"></p>
+        </header>
+
+        <div class="event-detail__actions">
+          <!-- join-btn/leave-btn start hidden - eventDetailPage.js decides which
+               one (if any) to reveal, since "logged in" alone isn't enough to
+               know which action applies (also depends on participation status). -->
+          <button id="join-btn" class="is-hidden">Join Event</button>
+          <button id="leave-btn" class="is-hidden">Leave Event</button>
+          <a id="calendar-link" href="#" class="event-detail__action-link">Add to Calendar</a>
+          <button id="report-btn" class="auth-only">Report Event</button>
+          <button id="delete-btn" class="btn-danger is-hidden">Delete Event</button>
+        </div>
+
+        <section class="event-detail__feedback">
+          <h2>Feedback</h2>
+
+          <form id="feedback-form" class="feedback-form auth-only">
+            <label for="feedback-rating">Rating (1-5)</label>
+            <input type="number" id="feedback-rating" name="rating" min="1" max="5" required />
+
+            <label for="feedback-comment">Comment (optional)</label>
+            <textarea id="feedback-comment" name="comment" maxlength="1000"></textarea>
+
+            <button type="submit" id="feedback-submit">Submit Feedback</button>
+          </form>
+
+          <ul id="feedback-list" class="feedback-list"></ul>
+        </section>
+      </div>
+    </section>
+  </main>
 
   <div id="modal-root"></div>
 
+  <script type="module" src="js/components/navbar.js"></script>
   <script type="module" src="js/pages/eventDetailPage.js"></script>
 </body>
 </html>

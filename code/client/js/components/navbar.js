@@ -5,16 +5,16 @@ function applyAuthVisibility() {
   const loggedIn = isLoggedIn();
   const admin = isAdmin();
 
-  qsa(".navbar__auth-only").forEach((el) => {
-    el.classList.toggle("navbar__hidden", !loggedIn);
+  qsa(".auth-only").forEach((el) => {
+    el.classList.toggle("is-hidden", !loggedIn);
   });
 
-  qsa(".navbar__guest-only").forEach((el) => {
-    el.classList.toggle("navbar__hidden", loggedIn);
+  qsa(".guest-only").forEach((el) => {
+    el.classList.toggle("is-hidden", loggedIn);
   });
 
-  qsa(".navbar__admin-only").forEach((el) => {
-    el.classList.toggle("navbar__hidden", !admin);
+  qsa(".admin-only").forEach((el) => {
+    el.classList.toggle("is-hidden", !admin);
   });
 }
 

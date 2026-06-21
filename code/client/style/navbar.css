@@ -34,7 +34,3 @@
   color: var(--color-accent);
   font-weight: 600;
 }
-
-.navbar__hidden {
-  display: none;
-}

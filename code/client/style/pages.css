@@ -133,3 +133,114 @@
   color: var(--color-text-muted);
   margin-bottom: 0.4rem;
 }
+
+.event-detail-page {
+  width: 100%;
+  max-width: 720px;
+}
+
+.event-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.event-detail__header {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.event-detail__header h1 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.event-detail__meta {
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.event-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.event-detail__action-link {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.event-detail__feedback {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.event-detail__feedback h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.feedback-form label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.6rem;
+}
+
+.feedback-form textarea {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 4rem;
+}
+
+.feedback-form button {
+  margin-top: 1.25rem;
+  align-self: flex-start;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+}
+
+.feedback-item {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.feedback-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.feedback-item__rating {
+  color: var(--color-accent-hover);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.feedback-item__author {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
