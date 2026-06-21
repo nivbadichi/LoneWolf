@@ -23,7 +23,10 @@ form.addEventListener("submit", async (event) => {
     const data = await login({ email, password });
     setSession(data.token, data.user);
     showToast("Welcome back!", "success");
-    window.location.href = "events.html";
+
+    setTimeout(() => {
+      window.location.href = "events.html";
+    }, 600);
   } catch (error) {
     showToast(error.message, "error");
   } finally {

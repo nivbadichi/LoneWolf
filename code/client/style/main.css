@@ -1,1 +1,60 @@
-/* Global layout, typography, color variables - to be implemented. */
+:root {
+  --color-bg: #f7f6f1;
+  --color-surface: #ffffff;
+  --color-primary: #2f4a38;
+  --color-primary-hover: #233823;
+  --color-accent: #d8ae4e;
+  --color-accent-hover: #c49a3a;
+  --color-text: #1f2a22;
+  --color-text-muted: #5c6b5f;
+  --color-border: #dcd9ce;
+  --color-error: #c0392b;
+  --color-success: #3f9142;
+  --radius: 8px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+button {
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}

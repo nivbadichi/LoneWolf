@@ -1,0 +1,70 @@
+# Client Build Tracker
+
+Tracks implementation status of every file in `code/client/`, same purpose
+and legend as `code/server/complete_folder_and_file_map.md`.
+
+**Status legend:** ✅ Done & tested in a browser &nbsp;|&nbsp; 🚧 Written, not yet verified in a browser &nbsp;|&nbsp; ⬜ Not started
+
+## Pages (`.html`)
+| File | Status |
+| :--- | :--- |
+| `index.html` | ⬜ |
+| `login.html` | ✅ |
+| `register.html` | ⬜ |
+| `events.html` | ⬜ |
+| `event-detail.html` | ⬜ |
+| `profile.html` | ⬜ |
+| `notifications.html` | ⬜ |
+| `admin.html` | ⬜ |
+
+## `js/api/` — server communication layer
+| File | Status |
+| :--- | :--- |
+| `config.js` | ✅ |
+| `http.js` | ✅ |
+| `authApi.js` | ✅ |
+| `usersApi.js` | ⬜ |
+| `eventsApi.js` | ⬜ |
+| `feedbackApi.js` | ⬜ |
+| `reportsApi.js` | ⬜ |
+| `notificationsApi.js` | ⬜ |
+| `adminApi.js` | ⬜ |
+
+## `js/pages/` — one script per page
+| File | Status |
+| :--- | :--- |
+| `homePage.js` | ⬜ |
+| `loginPage.js` | ✅ |
+| `registerPage.js` | ⬜ |
+| `eventsPage.js` | ⬜ |
+| `eventDetailPage.js` | ⬜ |
+| `profilePage.js` | ⬜ |
+| `notificationsPage.js` | ⬜ |
+| `adminPage.js` | ⬜ |
+
+## `js/components/`
+| File | Status |
+| :--- | :--- |
+| `toast.js` | ✅ |
+| `modal.js` | ⬜ |
+| `navbar.js` | ⬜ |
+| `eventCard.js` | ⬜ |
+| `notificationBell.js` | ⬜ |
+
+## `js/utils/`
+| File | Status |
+| :--- | :--- |
+| `auth.js` | ✅ |
+| `dom.js` | ✅ |
+| `validators.js` | ⬜ |
+
+## `style/`
+| File | Status |
+| :--- | :--- |
+| `reset.css` | ✅ |
+| `main.css` | ✅ |
+| `pages.css` | ✅ |
+| `navbar.css` | ⬜ |
+| `modal.css` | ⬜ |
+| `toast.css` | ⬜ |
+| `event-card.css` | ⬜ |
