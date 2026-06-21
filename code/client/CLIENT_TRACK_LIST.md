@@ -13,7 +13,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `register.html` | ✅ |
 | `events.html` | ✅ (Pass 1: list view only — filters/nearby/map are Pass 2) |
 | `event-detail.html` | ⬜ |
-| `profile.html` | ⬜ |
+| `profile.html` | ✅ |
 | `notifications.html` | ⬜ |
 | `admin.html` | ⬜ |
 
@@ -23,7 +23,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `config.js` | ✅ |
 | `http.js` | ✅ |
 | `authApi.js` | ✅ |
-| `usersApi.js` | ⬜ |
+| `usersApi.js` | ✅ (getMyProfile only — list/suspend pending, those are admin.html's job) |
 | `eventsApi.js` | ✅ (getAllEvents only so far — nearby/join/leave/calendar pending) |
 | `feedbackApi.js` | ⬜ |
 | `reportsApi.js` | ⬜ |
@@ -38,7 +38,7 @@ and legend as `code/server/complete_folder_and_file_map.md`.
 | `registerPage.js` | ✅ |
 | `eventsPage.js` | ✅ (Pass 1: list view only) |
 | `eventDetailPage.js` | ⬜ |
-| `profilePage.js` | ⬜ |
+| `profilePage.js` | ✅ |
 | `notificationsPage.js` | ⬜ |
 | `adminPage.js` | ⬜ |
 
