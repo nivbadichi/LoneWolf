@@ -174,9 +174,16 @@
 }
 
 .event-detail__action-link {
-  color: var(--color-primary);
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.25rem;
   font-weight: 600;
-  text-decoration: underline;
+}
+
+.event-detail__action-link:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .event-detail__feedback {
@@ -247,4 +254,93 @@
 .feedback-item__author {
   color: var(--color-text-muted);
   font-size: 0.85rem;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+.notification-item {
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.notification-item--unread {
+  border-left: 4px solid var(--color-accent);
+}
+
+.notification-item__type {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent-hover);
+  margin-bottom: 0.4rem;
+}
+
+.notification-item__message {
+  color: var(--color-text);
+  margin-bottom: 0.4rem;
+}
+
+.notification-item__timestamp {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.notification-item__mark-read {
+  margin-top: 0.6rem;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.notification-item__mark-read:hover {
+  background-color: var(--color-bg);
+}
+
+.admin-panel {
+  margin-top: 2rem;
+}
+
+.admin-panel h2 {
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 0.85rem 1.25rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.admin-row__meta {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.admin-row__status {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
 }

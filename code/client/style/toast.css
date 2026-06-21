@@ -1,1 +1,47 @@
-/* Toast component styles - to be implemented. */
+#toast-root {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  z-index: 2000;
+}
+
+.toast {
+  min-width: 220px;
+  max-width: 360px;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  /* Matches toast.js's 4000ms setTimeout removal: fade/slide in quickly,
+     hold fully visible, then fade out right before it's removed from the DOM. */
+  animation: toast-lifecycle 4s ease forwards;
+}
+
+.toast--success {
+  background-color: var(--color-success);
+}
+
+.toast--error {
+  background-color: var(--color-error);
+}
+
+@keyframes toast-lifecycle {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  8%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}

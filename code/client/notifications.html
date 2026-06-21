@@ -13,13 +13,32 @@
   <link rel="stylesheet" href="style/pages.css" />
 </head>
 <body>
-  <!-- Notifications list page - UI markup to be implemented. -->
-  <header id="navbar"></header>
+  <header id="navbar">
+    <nav class="navbar">
+      <a href="index.html" class="navbar__brand">LoneWolf</a>
+      <div class="navbar__links">
+        <a href="events.html" class="auth-only">Events</a>
+        <a href="profile.html" class="auth-only">Profile</a>
+        <a href="notifications.html" class="auth-only">Notifications</a>
+        <a href="admin.html" class="admin-only">Admin</a>
+        <a href="login.html" class="guest-only">Log In</a>
+        <a href="register.html" class="guest-only">Register</a>
+        <button id="logout-btn" class="auth-only">Log Out</button>
+      </div>
+    </nav>
+  </header>
 
-  <main id="app"></main>
+  <main id="app">
+    <section class="page-section">
+      <h1>Notifications</h1>
+
+      <ul id="notifications-list" class="notification-list"></ul>
+    </section>
+  </main>
 
   <div id="modal-root"></div>
 
+  <script type="module" src="js/components/navbar.js"></script>
   <script type="module" src="js/pages/notificationsPage.js"></script>
 </body>
 </html>
