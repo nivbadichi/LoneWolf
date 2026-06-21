@@ -18,6 +18,7 @@
 | Status | Endpoint                       | Function         | Description                                                                                           |
 | :----- | :----------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------- |
 | ✅     | `GET /api/users/me`            | `getUserProfile` | Retrieves the profile of the authenticated user, including their participation records. _(Protected)_ |
+| ✅     | `PATCH /api/users/me`          | `updateMyProfile` | [NEW] Allows the authenticated user to update their own name and/or interests. _(Protected)_         |
 | ✅     | `GET /api/users`               | `getAllUsers`    | Retrieves a list of all registered users. _(Protected: Admin only)_                                   |
 | ✅     | `PATCH /api/users/:id/suspend` | `suspendUser`    | Allows an Admin to suspend or ban a user account for violating rules. _(Protected: Admin only)_       |
 

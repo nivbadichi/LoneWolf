@@ -134,6 +134,10 @@
   margin-bottom: 0.4rem;
 }
 
+.profile-card__edit-btn {
+  margin-top: 1rem;
+}
+
 .event-detail-page {
   width: 100%;
   max-width: 720px;

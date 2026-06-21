@@ -51,6 +51,7 @@ This document outlines the complete backend architecture, directory structure, a
         eventValidator.js      ✅
         feedbackValidator.js   ✅ [NEW]
         notificationValidator.js ✅ [NEW]
+        userValidator.js       ✅ [NEW]
 ```
 
 ## 📄 Other Artifacts

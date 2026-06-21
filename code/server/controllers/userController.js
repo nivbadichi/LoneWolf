@@ -24,6 +24,27 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const updateMyProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { name, interests } = req.body;
+    if (name !== undefined) user.name = name;
+    if (interests !== undefined) user.interests = interests;
+
+    await user.save();
+
+    const updatedUser = await User.findById(user._id).select("-password");
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const suspendUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -50,4 +71,4 @@ const suspendUser = async (req, res) => {
   }
 };
 
-export { getUserProfile, getAllUsers, suspendUser };
+export { getUserProfile, updateMyProfile, getAllUsers, suspendUser };

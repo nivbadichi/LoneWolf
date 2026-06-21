@@ -1,7 +1,9 @@
-import { getMyProfile } from "../api/usersApi.js";
+import { getMyProfile, updateMyProfile } from "../api/usersApi.js";
 import { showToast } from "../components/toast.js";
+import { openModal } from "../components/modal.js";
 import { isLoggedIn, clearSession } from "../utils/auth.js";
 import { qs } from "../utils/dom.js";
+import { isRequired, getFirstError } from "../utils/validators.js";
 
 if (!isLoggedIn()) {
   window.location.href = "login.html";
@@ -48,11 +50,78 @@ function renderProfile(user) {
   });
   memberSince.textContent = `Member since ${joinedDate}`;
 
+  const editBtn = document.createElement("button");
+  editBtn.type = "button";
+  editBtn.className = "profile-card__edit-btn";
+  editBtn.textContent = "Edit Profile";
+  editBtn.onclick = () => openEditModal(user);
+
   profileContent.appendChild(name);
   profileContent.appendChild(role);
   profileContent.appendChild(email);
   profileContent.appendChild(interests);
   profileContent.appendChild(memberSince);
+  profileContent.appendChild(editBtn);
+}
+
+// Builds the edit form by hand and hands it to openModal as `content` -
+// this is the same "prompt() replacement" pattern eventDetailPage.js uses
+// for its report form: build real inputs, read their .value when the
+// modal's own action button fires.
+function openEditModal(user) {
+  const nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.value = user.name;
+
+  const interestsInput = document.createElement("input");
+  interestsInput.type = "text";
+  interestsInput.value = user.interests.join(", ");
+  interestsInput.placeholder = "Comma-separated, e.g. Gaming, Hiking";
+
+  const form = document.createElement("div");
+  form.className = "auth-form";
+
+  const nameLabel = document.createElement("label");
+  nameLabel.textContent = "Name";
+
+  const interestsLabel = document.createElement("label");
+  interestsLabel.textContent = "Interests";
+
+  form.append(nameLabel, nameInput, interestsLabel, interestsInput);
+
+  openModal({
+    title: "Edit Profile",
+    content: form,
+    actions: [
+      { label: "Cancel", variant: "secondary", onClick: (close) => close() },
+      {
+        label: "Save",
+        variant: "primary",
+        onClick: async (close) => {
+          const name = nameInput.value.trim();
+          const error = getFirstError(name, [{ test: (v) => isRequired(v), message: "Name is required" }]);
+          if (error) {
+            showToast(error, "error");
+            return;
+          }
+
+          const interests = interestsInput.value
+            .split(",")
+            .map((interest) => interest.trim())
+            .filter((interest) => interest.length > 0);
+
+          try {
+            await updateMyProfile({ name, interests });
+            close();
+            showToast("Profile updated.", "success");
+            loadProfile();
+          } catch (submitError) {
+            showToast(submitError.message, "error");
+          }
+        },
+      },
+    ],
+  });
 }
 
 async function loadProfile() {
