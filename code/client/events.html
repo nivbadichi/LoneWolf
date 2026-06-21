@@ -31,7 +31,12 @@
 
   <main id="app">
     <section class="page-section">
-      <h1>Discover Events</h1>
+      <div class="page-section__header">
+        <h1>Discover Events</h1>
+        <!-- Only a logged-in user can host an event; navbar.js's auth-only
+             toggling hides this for guests the same way it hides Events/Profile links. -->
+        <button id="create-event-btn" class="auth-only">Create Event</button>
+      </div>
 
       <div class="events-view-toggle">
         <button id="view-map-btn" type="button" class="events-view-toggle__btn events-view-toggle__btn--active">

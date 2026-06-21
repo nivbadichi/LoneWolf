@@ -10,6 +10,16 @@ export function getEventById(eventId) {
   return request(`/api/events/${eventId}`);
 }
 
+// POST /api/events - publishes a new event. Protected: hostId is set
+// server-side from the verified JWT, so we never send one from here.
+export function createEvent({ title, category, startTime, endTime, location, capacity }) {
+  return request("/api/events", {
+    method: "POST",
+    body: { title, category, startTime, endTime, location, capacity },
+    auth: true,
+  });
+}
+
 // POST /api/events/:id/join - reserves a spot for the caller. Protected.
 export function joinEvent(eventId) {
   return request(`/api/events/${eventId}/join`, { method: "POST", auth: true });
