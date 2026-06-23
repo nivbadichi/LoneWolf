@@ -1,10 +1,10 @@
 import { getAllEvents, createEvent } from "../api/eventsApi.js";
 import { createEventCard } from "../components/eventCard.js";
-import { renderEventsMap } from "../components/eventsMap.js";
+import { renderEventsMap, loadGoogleMapsScript } from "../components/eventsMap.js";
 import { showToast } from "../components/toast.js";
 import { openModal } from "../components/modal.js";
 import { qs } from "../utils/dom.js";
-import { isRequired, isFloatInRange, isIntInRange, getFirstError } from "../utils/validators.js";
+import { isRequired, isIntInRange, getFirstError } from "../utils/validators.js";
 import { EVENT_CATEGORIES } from "../utils/eventCategories.js";
 
 const listContainer = qs("#events-list");
@@ -42,20 +42,25 @@ viewListBtn.addEventListener("click", showListView);
 // Builds the "Create Event" form fresh each time the modal opens, and reads
 // its values back when the action button fires - the same prompt()-replacement
 // pattern as the report form in eventDetailPage.js, just with more fields.
-// Category is a fixed <select> (js/utils/eventCategories.js) rather than a
-// free-text box, so events don't end up scattered across inconsistent
-// near-duplicate category strings.
 function buildCreateEventForm() {
   const form = document.createElement("div");
   form.className = "modal-form";
 
-  const titleLabel = document.createElement("label");
-  titleLabel.textContent = "Title";
-  const titleInput = document.createElement("input");
-  titleInput.type = "text";
-  titleLabel.appendChild(titleInput);
-  form.appendChild(titleLabel);
+  function field(labelText, inputAttrs) {
+    const label = document.createElement("label");
+    label.textContent = labelText;
+    const input = document.createElement("input");
+    Object.entries(inputAttrs).forEach(([key, value]) => input.setAttribute(key, value));
+    label.appendChild(input);
+    form.appendChild(label);
+    return input;
+  }
 
+  const titleInput = field("Title", { type: "text", id: "create-event-title" });
+
+  // Fixed list (js/utils/eventCategories.js) instead of free text, so
+  // events don't end up scattered across inconsistent near-duplicate
+  // category strings ("Gaming" vs "gaming" vs "games").
   const categoryLabel = document.createElement("label");
   categoryLabel.textContent = "Category";
   const categorySelect = document.createElement("select");
@@ -91,48 +96,46 @@ function buildCreateEventForm() {
   timeRow.append(startWrap, endWrap);
   form.appendChild(timeRow);
 
-  const locationRow = document.createElement("div");
-  locationRow.className = "modal-form__row";
-  const latWrap = document.createElement("div");
-  const latLabel = document.createElement("label");
-  latLabel.textContent = "Latitude";
+  const addressInput = field("Address", { type: "text", placeholder: "Search for an address", autocomplete: "off" });
+
+  // Hold the geocoded coordinates behind the address field - the server still
+  // stores/validates plain {lat, lng}, only the input experience changes.
   const latInput = document.createElement("input");
-  latInput.type = "number";
-  latInput.step = "any";
-  latLabel.appendChild(latInput);
-  latWrap.appendChild(latLabel);
-  const lngWrap = document.createElement("div");
-  const lngLabel = document.createElement("label");
-  lngLabel.textContent = "Longitude";
+  latInput.type = "hidden";
   const lngInput = document.createElement("input");
-  lngInput.type = "number";
-  lngInput.step = "any";
-  lngLabel.appendChild(lngInput);
-  lngWrap.appendChild(lngLabel);
-  locationRow.append(latWrap, lngWrap);
-  form.appendChild(locationRow);
+  lngInput.type = "hidden";
+  form.append(latInput, lngInput);
 
-  const capacityLabel = document.createElement("label");
-  capacityLabel.textContent = "Capacity";
-  const capacityInput = document.createElement("input");
-  capacityInput.type = "number";
-  capacityInput.min = "1";
-  capacityInput.step = "1";
-  capacityLabel.appendChild(capacityInput);
-  form.appendChild(capacityLabel);
+  loadGoogleMapsScript().then(() => {
+    const autocomplete = new google.maps.places.Autocomplete(addressInput, { fields: ["geometry"] });
+    autocomplete.addListener("place_changed", () => {
+      const location = autocomplete.getPlace().geometry?.location;
+      latInput.value = location ? location.lat() : "";
+      lngInput.value = location ? location.lng() : "";
+    });
+  });
 
-  return { form, titleInput, categorySelect, startInput, endInput, latInput, lngInput, capacityInput };
+  // Typing again after picking a suggestion invalidates the previous
+  // coordinates until the user picks a (new) suggestion from the dropdown.
+  addressInput.addEventListener("input", () => {
+    latInput.value = "";
+    lngInput.value = "";
+  });
+
+  const capacityInput = field("Capacity", { type: "number", min: "1", step: "1" });
+
+  return { form, titleInput, categorySelect, startInput, endInput, addressInput, latInput, lngInput, capacityInput };
 }
 
-function validateCreateEventForm({ titleInput, categorySelect, startInput, endInput, latInput, lngInput, capacityInput }) {
+function validateCreateEventForm({ titleInput, categorySelect, startInput, endInput, addressInput, latInput, lngInput, capacityInput }) {
   return (
     getFirstError(titleInput.value, [{ test: isRequired, message: "Title is required" }]) ||
     (!categorySelect.value && "Please select a category") ||
     (!startInput.value && "Start time is required") ||
     (!endInput.value && "End time is required") ||
     (startInput.value && endInput.value && new Date(endInput.value) <= new Date(startInput.value) && "End time must be after start time") ||
-    getFirstError(latInput.value, [{ test: (v) => isFloatInRange(v, -90, 90), message: "Latitude must be between -90 and 90" }]) ||
-    getFirstError(lngInput.value, [{ test: (v) => isFloatInRange(v, -180, 180), message: "Longitude must be between -180 and 180" }]) ||
+    getFirstError(addressInput.value, [{ test: isRequired, message: "Address is required" }]) ||
+    ((!latInput.value || !lngInput.value) && "Pick an address from the suggestions list") ||
     getFirstError(capacityInput.value, [{ test: (v) => isIntInRange(v, 1, 100000), message: "Capacity must be a positive number" }]) ||
     null
   );

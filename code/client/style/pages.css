@@ -97,6 +97,7 @@
 
 .modal-form__row > div {
   flex: 1;
+  min-width: 0;
 }
 
 .event-list {
@@ -135,6 +136,22 @@
   color: var(--color-text-muted);
   text-align: center;
   padding: 2rem 0;
+}
+
+/* Google Places Autocomplete's own CSS assumes the browser-default
+   content-box, but our global `* { box-sizing: border-box }` reset
+   (reset.css) overrides that on every element, which throws off its
+   icon/text layout math and makes the suggestions dropdown look broken. */
+.pac-container,
+.pac-item,
+.pac-item-query,
+.pac-icon,
+.pac-matched {
+  box-sizing: content-box;
+}
+
+.pac-container {
+  z-index: 1001;
 }
 
 .profile-card {

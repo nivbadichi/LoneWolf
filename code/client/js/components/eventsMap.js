@@ -2,14 +2,14 @@ import { GOOGLE_MAPS_API_KEY } from "../api/config.js";
 
 let scriptLoadingPromise = null;
 
-function loadGoogleMapsScript() {
+export function loadGoogleMapsScript() {
   if (scriptLoadingPromise) {
     return scriptLoadingPromise;
   }
 
   scriptLoadingPromise = new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => reject(new Error("Failed to load Google Maps"));
