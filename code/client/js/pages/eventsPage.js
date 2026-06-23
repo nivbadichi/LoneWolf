@@ -1,10 +1,10 @@
 import { getAllEvents, createEvent } from "../api/eventsApi.js";
 import { createEventCard } from "../components/eventCard.js";
-import { renderEventsMap } from "../components/eventsMap.js";
+import { renderEventsMap, loadGoogleMapsScript } from "../components/eventsMap.js";
 import { showToast } from "../components/toast.js";
 import { openModal } from "../components/modal.js";
 import { qs } from "../utils/dom.js";
-import { isRequired, isFloatInRange, isIntInRange, getFirstError } from "../utils/validators.js";
+import { isRequired, isIntInRange, getFirstError } from "../utils/validators.js";
 
 const listContainer = qs("#events-list");
 const mapContainer = qs("#events-map");
@@ -77,41 +77,46 @@ function buildCreateEventForm() {
   timeRow.append(startWrap, endWrap);
   form.appendChild(timeRow);
 
-  const locationRow = document.createElement("div");
-  locationRow.className = "modal-form__row";
-  const latWrap = document.createElement("div");
-  const latLabel = document.createElement("label");
-  latLabel.textContent = "Latitude";
+  const addressInput = field("Address", { type: "text", placeholder: "Search for an address", autocomplete: "off" });
+
+  // Hold the geocoded coordinates behind the address field - the server still
+  // stores/validates plain {lat, lng}, only the input experience changes.
   const latInput = document.createElement("input");
-  latInput.type = "number";
-  latInput.step = "any";
-  latLabel.appendChild(latInput);
-  latWrap.appendChild(latLabel);
-  const lngWrap = document.createElement("div");
-  const lngLabel = document.createElement("label");
-  lngLabel.textContent = "Longitude";
+  latInput.type = "hidden";
   const lngInput = document.createElement("input");
-  lngInput.type = "number";
-  lngInput.step = "any";
-  lngLabel.appendChild(lngInput);
-  lngWrap.appendChild(lngLabel);
-  locationRow.append(latWrap, lngWrap);
-  form.appendChild(locationRow);
+  lngInput.type = "hidden";
+  form.append(latInput, lngInput);
+
+  loadGoogleMapsScript().then(() => {
+    const autocomplete = new google.maps.places.Autocomplete(addressInput, { fields: ["geometry"] });
+    autocomplete.addListener("place_changed", () => {
+      const location = autocomplete.getPlace().geometry?.location;
+      latInput.value = location ? location.lat() : "";
+      lngInput.value = location ? location.lng() : "";
+    });
+  });
+
+  // Typing again after picking a suggestion invalidates the previous
+  // coordinates until the user picks a (new) suggestion from the dropdown.
+  addressInput.addEventListener("input", () => {
+    latInput.value = "";
+    lngInput.value = "";
+  });
 
   const capacityInput = field("Capacity", { type: "number", min: "1", step: "1" });
 
-  return { form, titleInput, categoryInput, startInput, endInput, latInput, lngInput, capacityInput };
+  return { form, titleInput, categoryInput, startInput, endInput, addressInput, latInput, lngInput, capacityInput };
 }
 
-function validateCreateEventForm({ titleInput, categoryInput, startInput, endInput, latInput, lngInput, capacityInput }) {
+function validateCreateEventForm({ titleInput, categoryInput, startInput, endInput, addressInput, latInput, lngInput, capacityInput }) {
   return (
     getFirstError(titleInput.value, [{ test: isRequired, message: "Title is required" }]) ||
     getFirstError(categoryInput.value, [{ test: isRequired, message: "Category is required" }]) ||
     (!startInput.value && "Start time is required") ||
     (!endInput.value && "End time is required") ||
     (startInput.value && endInput.value && new Date(endInput.value) <= new Date(startInput.value) && "End time must be after start time") ||
-    getFirstError(latInput.value, [{ test: (v) => isFloatInRange(v, -90, 90), message: "Latitude must be between -90 and 90" }]) ||
-    getFirstError(lngInput.value, [{ test: (v) => isFloatInRange(v, -180, 180), message: "Longitude must be between -180 and 180" }]) ||
+    getFirstError(addressInput.value, [{ test: isRequired, message: "Address is required" }]) ||
+    ((!latInput.value || !lngInput.value) && "Pick an address from the suggestions list") ||
     getFirstError(capacityInput.value, [{ test: (v) => isIntInRange(v, 1, 100000), message: "Capacity must be a positive number" }]) ||
     null
   );

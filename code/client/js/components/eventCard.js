@@ -18,18 +18,23 @@ export function createEventCard(event) {
   // redirect ever happens, so ?id=... never gets lost.
   card.href = `event-detail?id=${event._id}`;
 
+  const category = document.createElement("span");
+  category.className = "event-card__category";
+  category.textContent = event.category;
+
   const title = document.createElement("h3");
   title.className = "event-card__title";
   title.textContent = event.title;
 
   const meta = document.createElement("p");
   meta.className = "event-card__meta";
-  meta.textContent = `${event.category} · ${formatDateRange(event.startTime, event.endTime)}`;
+  meta.textContent = formatDateRange(event.startTime, event.endTime);
 
   const capacity = document.createElement("p");
   capacity.className = "event-card__capacity";
   capacity.textContent = `${event.participants.length} / ${event.capacity} joined`;
 
+  card.appendChild(category);
   card.appendChild(title);
   card.appendChild(meta);
   card.appendChild(capacity);

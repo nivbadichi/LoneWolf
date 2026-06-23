@@ -4,6 +4,7 @@ import { createReport } from "../api/reportsApi.js";
 import { getUser, isLoggedIn, isAdmin } from "../utils/auth.js";
 import { showToast } from "../components/toast.js";
 import { openModal, showConfirmModal } from "../components/modal.js";
+import { loadGoogleMapsScript } from "../components/eventsMap.js";
 import { qs } from "../utils/dom.js";
 import { isIntInRange, hasMaxLength, getFirstError } from "../utils/validators.js";
 
@@ -44,7 +45,11 @@ function renderEvent(event) {
 
   const start = new Date(event.startTime).toLocaleString();
   const end = new Date(event.endTime).toLocaleString();
-  qs("#event-meta").textContent = `${start} - ${end} | (${event.location.lat}, ${event.location.lng})`;
+  qs("#event-meta").textContent = `${start} - ${end} | Locating address...`;
+
+  resolveAddress(event.location.lat, event.location.lng).then((address) => {
+    qs("#event-meta").textContent = `${start} - ${end} | ${address}`;
+  });
 
   const participants = event.participants || [];
   qs("#event-capacity").textContent = `${participants.length} / ${event.capacity} joined`;
@@ -54,6 +59,30 @@ function renderEvent(event) {
   setupJoinLeave(event, participants);
   setupReport();
   setupDelete(event);
+}
+
+// Turns raw coordinates into a real, readable address via Google's
+// Geocoder (the "reverse" of the address-search-to-coordinates lookup
+// the Create Event form does) - "(32.08, 34.78)" means nothing to most
+// people. Falls back to the raw coordinates if geocoding fails for any
+// reason (no results, network issue), so the page never shows nothing.
+async function resolveAddress(lat, lng) {
+  try {
+    await loadGoogleMapsScript();
+    const geocoder = new google.maps.Geocoder();
+
+    return new Promise((resolve) => {
+      geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          resolve(results[0].formatted_address);
+        } else {
+          resolve(`(${lat}, ${lng})`);
+        }
+      });
+    });
+  } catch {
+    return `(${lat}, ${lng})`;
+  }
 }
 
 // Decides which of Join/Leave to show (or neither, for a logged-out

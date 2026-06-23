@@ -57,3 +57,14 @@
   background-color: var(--color-error);
   color: white;
 }
+
+/* Google Places Autocomplete appends its suggestion dropdown (.pac-container)
+   directly to <body> via its own script, with a z-index we have no normal
+   way to control through specificity - it's injected by a third party, not
+   written by us. Without this, it renders below .modal-backdrop's z-index
+   (1000), so suggestions are visible but clicks land on the backdrop above
+   them instead. !important is justified here: there's no other reliable way
+   to win against a dynamically-injected third-party stylesheet. */
+.pac-container {
+  z-index: 2000 !important;
+}
