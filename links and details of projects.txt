@@ -1,3 +1,6 @@
+SERVER_RENDER: https://lonewolf-8i5k.onrender.com/
+
+
 HOMEPAGE_LINK: https://nivbadichi.github.io/LoneWolf/index.html
 
 FIGMA_LINK: https://www.figma.com/board/xWskz45eHCaE15PKQt30NM/LoneWolf-WireFrame-Prototype---v.1?t=zbMIYKe7c2NSCw6V-0
