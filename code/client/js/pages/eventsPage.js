@@ -5,6 +5,7 @@ import { showToast } from "../components/toast.js";
 import { openModal } from "../components/modal.js";
 import { qs } from "../utils/dom.js";
 import { isRequired, isIntInRange, getFirstError } from "../utils/validators.js";
+import { EVENT_CATEGORIES } from "../utils/eventCategories.js";
 
 const listContainer = qs("#events-list");
 const mapContainer = qs("#events-map");
@@ -56,7 +57,25 @@ function buildCreateEventForm() {
   }
 
   const titleInput = field("Title", { type: "text", id: "create-event-title" });
-  const categoryInput = field("Category", { type: "text", id: "create-event-category" });
+
+  // Fixed list (js/utils/eventCategories.js) instead of free text, so
+  // events don't end up scattered across inconsistent near-duplicate
+  // category strings ("Gaming" vs "gaming" vs "games").
+  const categoryLabel = document.createElement("label");
+  categoryLabel.textContent = "Category";
+  const categorySelect = document.createElement("select");
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.textContent = "Select a category";
+  categorySelect.appendChild(placeholderOption);
+  EVENT_CATEGORIES.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+  });
+  categoryLabel.appendChild(categorySelect);
+  form.appendChild(categoryLabel);
 
   const timeRow = document.createElement("div");
   timeRow.className = "modal-form__row";
@@ -105,13 +124,13 @@ function buildCreateEventForm() {
 
   const capacityInput = field("Capacity", { type: "number", min: "1", step: "1" });
 
-  return { form, titleInput, categoryInput, startInput, endInput, addressInput, latInput, lngInput, capacityInput };
+  return { form, titleInput, categorySelect, startInput, endInput, addressInput, latInput, lngInput, capacityInput };
 }
 
-function validateCreateEventForm({ titleInput, categoryInput, startInput, endInput, addressInput, latInput, lngInput, capacityInput }) {
+function validateCreateEventForm({ titleInput, categorySelect, startInput, endInput, addressInput, latInput, lngInput, capacityInput }) {
   return (
     getFirstError(titleInput.value, [{ test: isRequired, message: "Title is required" }]) ||
-    getFirstError(categoryInput.value, [{ test: isRequired, message: "Category is required" }]) ||
+    (!categorySelect.value && "Please select a category") ||
     (!startInput.value && "Start time is required") ||
     (!endInput.value && "End time is required") ||
     (startInput.value && endInput.value && new Date(endInput.value) <= new Date(startInput.value) && "End time must be after start time") ||
@@ -145,7 +164,7 @@ if (createEventBtn) {
             try {
               await createEvent({
                 title: fields.titleInput.value.trim(),
-                category: fields.categoryInput.value.trim(),
+                category: fields.categorySelect.value,
                 startTime: new Date(fields.startInput.value).toISOString(),
                 endTime: new Date(fields.endInput.value).toISOString(),
                 location: { lat: Number(fields.latInput.value), lng: Number(fields.lngInput.value) },
