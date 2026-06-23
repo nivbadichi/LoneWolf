@@ -34,6 +34,11 @@ function isIntInRange(value, min, max) {
   return Number.isInteger(num) && num >= min && num <= max;
 }
 
+function isFloatInRange(value, min, max) {
+  const num = Number(value);
+  return !Number.isNaN(num) && num >= min && num <= max;
+}
+
 // Runs a value through an ordered list of { test, message } rules and
 // returns the message for the first one that fails, or null if every rule
 // passes. Stopping at the first failure (rather than collecting all of
@@ -55,4 +60,4 @@ function getFirstError(value, rules) {
   return null;
 }
 
-export { isRequired, isValidEmail, hasMinLength, hasMaxLength, isIntInRange, getFirstError };
+export { isRequired, isValidEmail, hasMinLength, hasMaxLength, isIntInRange, isFloatInRange, getFirstError };
